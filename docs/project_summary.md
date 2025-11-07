@@ -1,135 +1,178 @@
 # CERAS — Cognitive Efficiency & Reasoning Alignment System
 
-## 🔍 Overview
+## Overview
 
-**CERAS (Cognitive Efficiency & Reasoning Alignment System)** is a hybrid intelligent framework designed to measure and model an individual’s **learning readiness** and **reasoning alignment** with expert cognitive structures.
+**CERAS (Cognitive Efficiency & Reasoning Alignment System)** is a hybrid intelligent framework that models and measures an individual’s **learning readiness** by combining **Cognitive Efficiency (CE)** and **Reasoning Alignment (RA)**.
 
-It combines principles from:
-- **Neuro-Fuzzy Systems (ANFIS)** for interpretable rule-based learning,
-- **Neural Networks (ANN)** for adaptive pattern discovery,
-- **Genetic Algorithms (GA)** for optimization of parameters and rule selection,
-to create a unified system that balances **explainability** and **performance**.
+It unifies:
+- **Neuro-Fuzzy Systems (ANFIS)** for interpretable rule-based reasoning,  
+- **Neural Networks (ANN)** for adaptive pattern discovery,  
+- **Genetic Algorithms (GA)** for optimal parameter and rule search,  
+- **Large Language Models (LLMs)** via **LangChain + Ollama** for reasoning decomposition and verification.
 
-CERAS aims to quantify how efficiently an individual processes information and how closely their reasoning aligns with domain-expert reasoning pathways — useful for education, cognitive assessment, and AI tutoring systems.
-
----
-
-## 🎯 Objectives
-
-1. **Measure Cognitive Efficiency:** Quantify how effectively a learner absorbs and processes information using behavioral and task-level metrics.  
-2. **Evaluate Reasoning Alignment:** Compare the learner’s logical structure and inference steps with an expert model using pattern-matching and fuzzy reasoning.  
-3. **Generate a Learning Readiness Score (LRS):** Provide a single interpretable score (0–1) combining efficiency and alignment metrics.  
-4. **Build an Explainable AI Model:** Derive human-readable fuzzy rules explaining why a learner scores high or low.  
-5. **Develop an Interactive Interface:** Build a Streamlit dashboard and FastAPI backend to visualize results and test the model with real data.  
+The system evaluates **how efficiently** a learner processes information and **how closely** their reasoning aligns with domain experts — producing an interpretable, multi-dimensional *Learning Readiness Score (LRS)*.
 
 ---
 
-## 🧩 Tech Stack Summary
+## Objectives
+
+1. **Measure Cognitive Efficiency (CE):** Quantify the learner’s speed, focus, and information-processing efficiency from behavioral signals.  
+2. **Evaluate Reasoning Alignment (RA):** Compare the learner’s logical structure with expert reasoning trees using fuzzy-semantic scoring.  
+3. **Decompose & Verify Reasoning:** Use an LLM-based *Reasoning Decomposer* and *Verifier* to generate and validate atomic subproblems from user queries.  
+4. **Compute Learning Readiness Score (LRS):** Fuse CE and RA via a fuzzy-weighted inference engine.  
+5. **Enable Explainability:** Produce interpretable rules and alignment graphs explaining *why* a learner scored high or low.  
+6. **Deliver a Full Interactive System:** Deploy a web dashboard and API for exploration, live reasoning, and model interaction.
+
+---
+
+## Tech Stack Summary
 
 | Layer | Tools / Frameworks | Purpose |
 |-------|--------------------|----------|
-| Language | **Python 3.12** | Core development |
-| Environment | **Conda** | Dependency & version management |
-| Model | **LangChain (0.3.27)**, **PyTorch**, **Scikit-learn** | Model orchestration, learning & inference |
-| Neuro-Fuzzy | **Custom ANFIS implementation** | Hybrid learning |
-| Optimization | **Genetic Algorithms (GA)** | Parameter tuning |
-| Vector Storage | **FAISS**, **ChromaDB** | Semantic reasoning data |
-| Interface | **Streamlit**, **FastAPI**, **Uvicorn** | Visualization & API service |
-| Logging & Config | **Loguru**, **Pyyaml** | Monitoring & config management |
-| Experimentation | **JupyterLab**, **Matplotlib**, **Seaborn** | Data analysis, visualization |
+| Language | **Python 3.12** | Core implementation |
+| Orchestration | **LangChain (0.3.27)** + **Ollama** | Reasoning decomposition and verification |
+| ML Frameworks | **PyTorch**, **Scikit-learn** | Neural & hybrid learning |
+| Neuro-Fuzzy | **Custom ANFIS** | Interpretable fuzzy inference |
+| Optimization | **Genetic Algorithm (GA)** | Membership function optimization |
+| Vector Search | **FAISS**, **ChromaDB** | Reasoning memory and context retrieval |
+| Interface | **Streamlit**, **FastAPI**, **Uvicorn** | Dashboard + REST API |
+| Experimentation | **JupyterLab**, **Matplotlib**, **Seaborn** | Analysis & visualization |
+| Logging & Config | **Loguru**, **PyYAML** | Config + monitoring |
+| Deployment | **Docker**, **GitHub Actions** | CI/CD + reproducibility |
 
 ---
 
-## ⚙️ System Architecture
+## System Architecture
 
-![alt text](image-1.png)
+![System Architecture ceras](image.png)
 
-## 🧮 Pipeline Flow (End-to-End)
+
+## 🧮 Pipeline Flow (Stage-by-Stage)
 
 | Stage | Module | Description | Output |
 |--------|---------|--------------|----------|
-| **1. Data Ingestion** | `src/ceras/data_loader.py` | Load CSV / JSON cognitive task data | Pandas DataFrame |
-| **2. Preprocessing** | `src/ceras/features/featurize.py` | Clean, normalize, engineer cognitive and reasoning metrics | Feature Matrix |
-| **3. Model Training** | `src/ceras/models/anfis.py` & `src/ceras/models/ann.py` | Train hybrid models (ANFIS, ANN, GA) on efficiency and reasoning data | Trained model weights |
-| **4. Evaluation** | `src/ceras/eval/metrics.py` | Evaluate accuracy, interpretability, and alignment | Metrics Report |
-| **5. Reasoning Alignment Analysis** | `src/ceras/reasoning_analysis.py` | Compare user reasoning vs expert structure using fuzzy logic | Alignment Scores |
-| **6. Visualization / Interface** | Streamlit & FastAPI | Provide dashboard and REST API for interactive testing | Web Interface |
-| **7. Experiment Tracking** | `experiments/run_experiment.py` | Log results and compare models automatically | Logs / Plots / Reports |
+| **1. Data Ingestion** | `src/ceras/data_loader.py` | Load raw behavioral, cognitive, and reasoning datasets from CSV/JSON sources. | Pandas DataFrame |
+| **2. Preprocessing** | `src/ceras/features/featurize.py` | Clean, normalize, and engineer cognitive features (reaction time, accuracy, focus metrics). | Feature Matrix |
+| **3. Feature Engineering & Quality Layer** | `src/ceras/features/feature_quality.py` | Apply temporal smoothing, embeddings, missingness modeling, and outlier detection. | Cleaned, aligned data tensors |
+| **4. Cognitive Efficiency Modeling (CEPM)** | `src/ceras/models/cepm.py` | Sequence encoder (GRU) + XGBoost head for CE score prediction; explainable with SHAP. | **CE Score (0–100)** |
+| **5. Reasoning Trace Segmentation** | `src/ceras/reasoning/trace_segmenter.py` | Segment reasoning logs or text traces into discrete cognitive steps. | Stepwise trace dataset |
+| **6. Reasoning Decomposition** | `src/ceras/reasoning/decomposer.py` | LLM (`llm_utils.py`) breaks input problem into **atomic subtasks** via strict JSON: `{"subtasks": [...]}` | Subtask JSON |
+| **7. Subtask Verification Loop** | `src/ceras/reasoning/verifier.py` | Separate LLM verifier evaluates subtask quality.<br>• If `{approved: true}` → forward to CAMRE<br>• If `{approved: false}` → re-decompose using feedback | Verified Subtasks |
+| **8. CAMRE-EDU Reasoning Analysis** | `src/ceras/reasoning/camre_edu.py` | Builds reasoning tree-of-thoughts graph; aligns user reasoning with expert reference. | **RDS (0.0–1.0)** + Breakpoints |
+| **9. Inference Engine** | `src/ceras/inference/engine.py` | Combines CE and RDS → fuzzy aggregation → Learning Readiness Score (LRS). | **LRS (0.0–1.0)** + Explanation Rules |
+| **10. Interface Layer** | `src/ceras/interface/` (Streamlit / FastAPI) | Web UI for reasoning exploration, CE/RDS dashboards, and API endpoints. | Interactive Visualization |
+| **11. Experiment Tracking & Reporting** | `experiments/run_experiment.py` | Logs model runs, visualizes CE–RDS correlation, generates analysis reports. | Logs, graphs, and summaries |
 
 ---
 
-## 🧠 Key Components
+## 🔁 Reasoning Engine Loop
 
-### 1. Data Layer
-- **Sources:** Cognitive test datasets, reasoning transcripts, performance logs.
-- **Structure:**  
-  - `data/raw` → unprocessed datasets  
-  - `data/processed` → cleaned, normalized features  
-- **Goal:** Transform human reasoning and performance logs into model-ready features.
+The Reasoning Engine has an internal **verification-feedback loop** for decomposition quality control.
 
-### 2. Feature Layer
-- Feature extraction for:
-  - Response time, accuracy
-  - Stepwise reasoning patterns
-  - Semantic similarity to expert reasoning  
-- Stored as vectors for hybrid neuro-symbolic modeling.
+```mermaid
+flowchart TD
+    Q["User Query / Reasoning Trace"] --> D["Decomposer (LLM)\n→ Strict JSON: {subtasks:[...]}"]
+    D --> V["Verifier (LLM Classifier)\n→ {approved: bool, confidence, revised_subtasks?}"]
 
-### 3. Model Layer
-- **ANFIS:** Learns fuzzy rules for reasoning efficiency.
-- **ANN:** Learns nonlinear interactions among features.
-- **GA:** Optimizes membership function parameters for ANFIS and model hyperparameters.
-- Supports **comparison experiments** between each model.
+    V -- "approved: true" --> A["CAMRE-EDU\n(Tree-of-Thoughts Graph Alignment)"]
+    V -- "approved: false" --> D2["Re-Decomposer (Refine using verifier feedback)"]
+    D2 --> V
 
-### 4. Evaluation Layer
-- Metrics include:
-  - Cognitive Efficiency Score (CES)
-  - Reasoning Alignment Score (RAS)
-  - Learning Readiness Index (LRI = f(CES, RAS))
-- Each prediction explained via top fuzzy rules (“why this score?”).
+    A --> RDS["RDS (0–1) + Breakpoints"]
+```
 
-### 5. Interface Layer
-- **Streamlit Dashboard:** Interactive visualization of scores and explanations.
-- **FastAPI Service:** Provides REST endpoints for model inference and data submission.
-
-### 6. Deployment & CI/CD
-- Dockerized app for reproducible deployment.
-- GitHub Actions for:
-  - Linting (`ruff`, `black`)
-  - Testing (`pytest`)
-  - Model training pipelines
-  - Auto-deploy to Streamlit Cloud / Hugging Face Spaces
+**Key Points:**
+- Decomposer: always returns JSON; failure raises exception (no fallback).  
+- Verifier: ensures correctness and logical order of subtasks.  
+- If the verifier rejects (`approved: false`), decomposition re-runs with structured feedback.  
+- Loop terminates when `approved: true` or max attempts reached.
 
 ---
 
-## 📊 Evaluation Metrics
+## 🔀 Integration with CEPM
+
+After reasoning validation and CAMRE scoring:
+
+```mermaid
+flowchart LR
+    CE["CEPM (Cognitive Efficiency Model)"] --> INFER["CERAS Inference Engine"]
+    RDS["CAMRE-EDU RDS"] --> INFER
+    INFER --> LRS["Learning Readiness Score (LRS)\n= f(CE, RDS)"]
+    LRS --> DASH["Streamlit / API Dashboard\n→ Reports, Readiness Graphs, CE×RDS Analytics"]
+```
+
+**Learning Readiness Score (LRS)** is computed as:
+
+\[
+LRS = \alpha \times f(CE) + (1-\alpha) \times g(RDS)
+\]
+
+Where:
+- `f()` and `g()` are fuzzy membership functions learned via ANFIS.  
+- `α` is optimized using GA to balance efficiency vs reasoning.
+
+---
+
+## 📊 Key Outputs
 
 | Metric | Description |
 |---------|--------------|
-| **RMSE** | Measures prediction error of learning readiness |
-| **Fuzzy Rule Confidence** | Degree of trust in fuzzy inference |
-| **Reasoning Divergence Index (RDI)** | Quantifies deviation from expert logic |
-| **Cognitive Efficiency Ratio (CER)** | Ratio of expected vs actual performance |
-| **Interpretability Index (II)** | Number of understandable rules / total rules |
+| **CE (Cognitive Efficiency)** | Behavioral efficiency (0–100) |
+| **RDS (Reasoning Divergence Score)** | Logical alignment with expert graph (0–1) |
+| **LRS (Learning Readiness Score)** | Combined readiness indicator |
+| **Breakpoints** | Reasoning divergence points |
+| **Rule Confidence** | Fuzzy rule trust coefficient |
+| **Interpretability Index** | Fraction of explainable rules |
 
 ---
 
-## 🚀 Deliverables
-
-| Phase | Deliverable | Description |
-|--------|--------------|--------------|
-| Phase 1 | **Data Pipeline + Baseline Model** | CSV ingestion, preprocessing, simple ANN baseline |
-| Phase 2 | **ANFIS Module** | Fuzzy rule generation and hybrid learning implementation |
-| Phase 3 | **GA Optimizer** | Genetic algorithm optimizer for fuzzy parameters |
-| Phase 4 | **Evaluation Suite** | Metrics, logging, comparison dashboard |
-| Phase 5 | **Interface + API** | Streamlit dashboard + FastAPI endpoints |
-| Phase 6 | **Final Report & Docs** | Paper, presentation, reproducibility package |
-
----
-
-## 🧩 Example Output (Conceptual)
+## 🧠 Example Inference Output
 
 ```json
 {
-  "user_id": "L123",
-  "cognitive_efficiency": 0.82,
-  "reasoning_alignm_
+  "query": "How to develop an app in Flutter?",
+  "subtasks": [
+    "Define app structure and target features",
+    "Set up Flutter environment and SDK",
+    "Design UI components and navigation flow",
+    "Connect backend APIs and manage state",
+    "Test and debug on multiple devices",
+    "Build release version and deploy to store"
+  ],
+  "verifier": {"approved": true, "confidence": 0.96},
+  "RDS": 0.84,
+  "CE": 79.3,
+  "LRS": 0.87
+}
+```
+
+---
+
+## 🧩 File Mapping (Core Modules)
+
+```
+ceras/
+├── data_loader.py
+├── features/
+│   ├── featurize.py
+│   └── feature_quality.py
+├── models/
+│   ├── cepm.py
+│   ├── anfis.py
+│   └── ann.py
+├── reasoning/
+│   ├── llm_utils.py
+│   ├── decomposer.py
+│   ├── verifier.py
+│   └── camre_edu.py
+├── inference/
+│   └── engine.py
+├── interface/
+│   ├── streamlit_app.py
+│   └── fastapi_app.py
+└── experiments/
+    └── run_experiment.py
+```
+
+---
+

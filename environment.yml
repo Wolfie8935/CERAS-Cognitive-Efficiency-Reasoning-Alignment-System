@@ -22,6 +22,7 @@ dependencies:
   - cmake
   - pip:
       - langchain==0.3.27
+      - langchain_community==0.3.27
       - openai
       - tiktoken
       - transformers
@@ -43,5 +44,7 @@ dependencies:
       - coverage
       - sqlalchemy
       - sqlmodel
+      - datasets
+      - openpyxl
       # uvloop is Unix-only; skip on Windows:
       - "uvloop; sys_platform != 'win32'"

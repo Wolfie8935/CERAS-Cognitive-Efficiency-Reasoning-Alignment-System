@@ -13,8 +13,14 @@ flowchart LR
     %% Reasoning pipeline (right)
     A --> E["Student Reasoning Trace\n(time-stamped steps)"]
     E --> F["Trace Processing & Step Segmentation\n- Tokenization\n- Step bundling\n- Heuristics"]
-    F --> G["Reasoning Decomposition Engine\n(Break problems into subproblems / planning)"]
-    G --> H["CAMRE-EDU Reasoning Analysis Engine\n(Tree-of-Thoughts graph alignment + semantic scoring)"]
+    F --> G["Decomposer (LLM) — STRICT JSON output\n(Break query into atomic subtasks)"]
+
+    %% verifier loop
+    G --> V["Subtask Verifier (LLM classifier)\n- Input: original query + JSON subtasks\n- Output: {approved: yes/no, confidence, revised_subtasks?}"]
+    V -- yes --> H["CAMRE-EDU Reasoning Analysis Engine\n(Tree-of-Thoughts graph alignment + semantic scoring)"]
+    V -- no --> G2["Decomposer (LLM) — re-run\n(Use verifier feedback to refine JSON subtasks)"]
+    G2 --> V
+
     H --> I["RDS (0.00–1.00) + Breakpoints"]
 
     %% Merge into inference engine
