@@ -53,7 +53,7 @@ The system evaluates **how efficiently** a learner processes information and **h
 
 ## System Architecture
 
-![System Architecture ceras](image.png)
+![System Architecture ceras](./docs/image.png)
 
 
 ## 🧮 Pipeline Flow (Stage-by-Stage)
