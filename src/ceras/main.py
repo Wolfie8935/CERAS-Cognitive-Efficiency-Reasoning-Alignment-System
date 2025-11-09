@@ -2,7 +2,7 @@ from inference import run_inference_pipeline
 from CAMRE_EDU import combined_reasoning_score
 import json
 
-example_prompt = "how can i solve the question (a^2 - b^2)?"
+example_prompt = "how can i learn french?"
 out = run_inference_pipeline(example_prompt,auto_extend=True)
 
 print("\n=== FORMATTED FINAL SUBTASKS ===")
