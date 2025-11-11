@@ -1,1 +1,8 @@
 .env
+.gitattributes
+Dataset/
+data/raw/
+data/anonymisedData/
+data/processed/
+.vscode
+__pycache__/
