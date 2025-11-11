@@ -1,0 +1,1622 @@
+{
+  "name": "canonical_merged",
+  "rows": 28925,
+  "cols": 139,
+  "columns": {
+    "student_id": {
+      "dtype": "string",
+      "n_missing": 1,
+      "pct_missing": 3.457216940363008e-05,
+      "n_unique": 28924,
+      "top_values": {
+        "1.0": 1,
+        "605118": 1,
+        "604939": 1,
+        "604932": 1,
+        "604930": 1
+      }
+    },
+    "has_scores": {
+      "dtype": "object",
+      "n_missing": 28845,
+      "pct_missing": 0.9972342264477096,
+      "n_unique": 1,
+      "top_values": {
+        "False": 80
+      }
+    },
+    "has_time": {
+      "dtype": "object",
+      "n_missing": 28845,
+      "pct_missing": 0.9972342264477096,
+      "n_unique": 1,
+      "top_values": {
+        "False": 80
+      }
+    },
+    "has_behavior": {
+      "dtype": "object",
+      "n_missing": 28845,
+      "pct_missing": 0.9972342264477096,
+      "n_unique": 1,
+      "top_values": {
+        "False": 80
+      }
+    },
+    "code_module": {
+      "dtype": "object",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 7,
+      "top_values": {
+        "BBB": 7692,
+        "FFF": 6777,
+        "DDD": 5126,
+        "CCC": 4249,
+        "GGG": 2468
+      }
+    },
+    "code_presentation": {
+      "dtype": "object",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 4,
+      "top_values": {
+        "2014J": 9859,
+        "2013J": 7736,
+        "2014B": 6676,
+        "2013B": 4514
+      }
+    },
+    "gender": {
+      "dtype": "object",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 2,
+      "top_values": {
+        "M": 15046,
+        "F": 13739
+      }
+    },
+    "region": {
+      "dtype": "object",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 13,
+      "top_values": {
+        "East Anglian Region": 3000,
+        "Scotland": 2934,
+        "London Region": 2845,
+        "South Region": 2737,
+        "North Western Region": 2548
+      }
+    },
+    "highest_education": {
+      "dtype": "object",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 5,
+      "top_values": {
+        "A Level or Equivalent": 12355,
+        "Lower Than A Level": 11780,
+        "HE Qualification": 4092,
+        "No Formal quals": 306,
+        "Post Graduate Qualification": 252
+      }
+    },
+    "imd_band": {
+      "dtype": "object",
+      "n_missing": 1111,
+      "pct_missing": 0.03840968020743302,
+      "n_unique": 10,
+      "top_values": {
+        "20-30%": 3200,
+        "10-20": 3132,
+        "30-40%": 3128,
+        "0-10%": 2944,
+        "40-50%": 2890
+      }
+    },
+    "age_band": {
+      "dtype": "object",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 3,
+      "top_values": {
+        "0-35": 20145,
+        "35-55": 8462,
+        "55<=": 178
+      }
+    },
+    "num_of_prev_attempts": {
+      "dtype": "float64",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 7,
+      "top_values": {
+        "0.0": 26055,
+        "1.0": 2155,
+        "2.0": 440,
+        "3.0": 97,
+        "4.0": 27
+      }
+    },
+    "studied_credits": {
+      "dtype": "float64",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 61,
+      "top_values": {
+        "60.0": 15035,
+        "120.0": 5550,
+        "30.0": 3469,
+        "90.0": 2551,
+        "180.0": 695
+      }
+    },
+    "disability": {
+      "dtype": "object",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 2,
+      "top_values": {
+        "N": 26068,
+        "Y": 2717
+      }
+    },
+    "final_result": {
+      "dtype": "object",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 4,
+      "top_values": {
+        "Pass": 10833,
+        "Withdrawn": 9043,
+        "Fail": 6264,
+        "Distinction": 2645
+      }
+    },
+    "oulad_avg_assessment_score": {
+      "dtype": "float64",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 3187,
+      "top_values": {
+        "0.0": 5458,
+        "80.0": 203,
+        "70.0": 175,
+        "75.0": 173,
+        "76.0": 158
+      }
+    },
+    "oulad_n_assessments": {
+      "dtype": "float64",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 28,
+      "top_values": {
+        "0.0": 5416,
+        "12.0": 3413,
+        "5.0": 2661,
+        "7.0": 2266,
+        "11.0": 2231
+      }
+    },
+    "oulad_avg_clicks": {
+      "dtype": "float64",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 20480,
+      "top_values": {
+        "0.0": 2711,
+        "1.0": 209,
+        "2.0": 208,
+        "1.5": 102,
+        "3.0": 100
+      }
+    },
+    "oulad_active_days": {
+      "dtype": "float64",
+      "n_missing": 140,
+      "pct_missing": 0.0048401037165082105,
+      "n_unique": 286,
+      "top_values": {
+        "0.0": 2711,
+        "1.0": 596,
+        "2.0": 488,
+        "3.0": 395,
+        "4.0": 388
+      }
+    },
+    "Hold .": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 40,
+      "top_values": {
+        "101.0": 6,
+        "90.0": 3,
+        "81.0": 3,
+        "89.0": 2,
+        "106.0": 2
+      }
+    },
+    "Hold t": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 36,
+      "top_values": {
+        "92.0": 4,
+        "74.0": 3,
+        "83.0": 3,
+        "82.0": 3,
+        "91.0": 2
+      }
+    },
+    "Hold i": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 41,
+      "top_values": {
+        "74.0": 5,
+        "91.0": 3,
+        "63.0": 3,
+        "85.0": 3,
+        "92.0": 2
+      }
+    },
+    "Hold e": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 40,
+      "top_values": {
+        "74.0": 4,
+        "100.0": 4,
+        "90.0": 3,
+        "102.0": 3,
+        "85.0": 2
+      }
+    },
+    "Hold Shift": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 35,
+      "top_values": {
+        "87.0": 3,
+        "80.0": 3,
+        "97.0": 3,
+        "108.0": 3,
+        "105.0": 3
+      }
+    },
+    "Hold 5": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 33,
+      "top_values": {
+        "82.0": 3,
+        "75.0": 3,
+        "79.0": 3,
+        "73.0": 3,
+        "72.0": 3
+      }
+    },
+    "Hold Shift.1": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 36,
+      "top_values": {
+        "70.0": 3,
+        "107.0": 3,
+        "79.0": 3,
+        "98.0": 3,
+        "95.0": 3
+      }
+    },
+    "Hold Caps": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 38,
+      "top_values": {
+        "78.0": 3,
+        "97.0": 3,
+        "52.0": 2,
+        "61.0": 2,
+        "79.0": 2
+      }
+    },
+    "Hold r": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 31,
+      "top_values": {
+        "73.0": 4,
+        "62.0": 4,
+        "92.0": 4,
+        "65.0": 4,
+        "82.0": 4
+      }
+    },
+    "Hold o": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 36,
+      "top_values": {
+        "92.0": 4,
+        "81.0": 4,
+        "79.0": 3,
+        "75.0": 2,
+        "94.0": 2
+      }
+    },
+    "Hold a": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 37,
+      "top_values": {
+        "83.0": 4,
+        "64.0": 4,
+        "80.0": 3,
+        "72.0": 3,
+        "110.0": 2
+      }
+    },
+    "Hold n": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 34,
+      "top_values": {
+        "91.0": 3,
+        "73.0": 3,
+        "98.0": 3,
+        "81.0": 3,
+        "97.0": 3
+      }
+    },
+    "Hold l": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 39,
+      "top_values": {
+        "82.0": 4,
+        "91.0": 3,
+        "83.0": 3,
+        "71.0": 2,
+        "92.0": 2
+      }
+    },
+    "Hold Enter": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 37,
+      "top_values": {
+        "70.0": 4,
+        "61.0": 4,
+        "80.0": 3,
+        "69.0": 3,
+        "59.0": 2
+      }
+    },
+    "DD ..t": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 52,
+      "top_values": {
+        "660.0": 2,
+        "630.0": 2,
+        "702.0": 2,
+        "513.0": 2,
+        "320.0": 1
+      }
+    },
+    "DD t.i": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 55,
+      "top_values": {
+        "401.0": 2,
+        "622.0": 1,
+        "307.0": 1,
+        "270.0": 1,
+        "171.0": 1
+      }
+    },
+    "DD i.e": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 55,
+      "top_values": {
+        "1066.0": 2,
+        "593.0": 1,
+        "284.0": 1,
+        "603.0": 1,
+        "132.0": 1
+      }
+    },
+    "DD e.Shift": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 56,
+      "top_values": {
+        "837.0": 1,
+        "383.0": 1,
+        "1165.0": 1,
+        "321.0": 1,
+        "324.0": 1
+      }
+    },
+    "DD Shift.5": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 52,
+      "top_values": {
+        "666.0": 2,
+        "1014.0": 2,
+        "862.0": 2,
+        "611.0": 2,
+        "609.0": 1
+      }
+    },
+    "DD 5.Shift": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 56,
+      "top_values": {
+        "444.0": 1,
+        "1096.0": 1,
+        "663.0": 1,
+        "303.0": 1,
+        "338.0": 1
+      }
+    },
+    "DD Shift.Caps": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 53,
+      "top_values": {
+        "600.0": 2,
+        "525.0": 2,
+        "475.0": 2,
+        "779.0": 1,
+        "747.0": 1
+      }
+    },
+    "DD Caps.r": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 56,
+      "top_values": {
+        "431.0": 1,
+        "694.0": 1,
+        "351.0": 1,
+        "267.0": 1,
+        "361.0": 1
+      }
+    },
+    "DD r.o": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 56,
+      "top_values": {
+        "618.0": 1,
+        "947.0": 1,
+        "613.0": 1,
+        "632.0": 1,
+        "212.0": 1
+      }
+    },
+    "DD o.a": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 54,
+      "top_values": {
+        "591.0": 2,
+        "507.0": 2,
+        "559.0": 1,
+        "333.0": 1,
+        "343.0": 1
+      }
+    },
+    "DD a.n": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 54,
+      "top_values": {
+        "496.0": 2,
+        "570.0": 2,
+        "580.0": 1,
+        "260.0": 1,
+        "490.0": 1
+      }
+    },
+    "DD n.l": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 53,
+      "top_values": {
+        "313.0": 2,
+        "267.0": 2,
+        "264.0": 2,
+        "772.0": 1,
+        "269.0": 1
+      }
+    },
+    "DD l.Enter": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 53,
+      "top_values": {
+        "601.0": 2,
+        "569.0": 2,
+        "472.0": 2,
+        "474.0": 1,
+        "680.0": 1
+      }
+    },
+    "UD ..t": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 55,
+      "top_values": {
+        "436.0": 2,
+        "294.0": 1,
+        "816.0": 1,
+        "705.0": 1,
+        "674.0": 1
+      }
+    },
+    "UD t.i": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 53,
+      "top_values": {
+        "530.0": 2,
+        "181.0": 2,
+        "274.0": 2,
+        "807.0": 1,
+        "490.0": 1
+      }
+    },
+    "UD i.e": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 51,
+      "top_values": {
+        "529.0": 3,
+        "250.0": 2,
+        "534.0": 2,
+        "341.0": 2,
+        "585.0": 1
+      }
+    },
+    "UD e.Shift": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 53,
+      "top_values": {
+        "282.0": 2,
+        "822.0": 2,
+        "206.0": 2,
+        "752.0": 1,
+        "934.0": 1
+      }
+    },
+    "UD Shift.5": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 55,
+      "top_values": {
+        "569.0": 2,
+        "463.0": 1,
+        "505.0": 1,
+        "547.0": 1,
+        "478.0": 1
+      }
+    },
+    "UD 5.Shift": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 55,
+      "top_values": {
+        "219.0": 2,
+        "362.0": 1,
+        "515.0": 1,
+        "555.0": 1,
+        "230.0": 1
+      }
+    },
+    "UD Shift.Caps": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 54,
+      "top_values": {
+        "381.0": 2,
+        "490.0": 2,
+        "530.0": 1,
+        "689.0": 1,
+        "1436.0": 1
+      }
+    },
+    "UD Caps.r": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 56,
+      "top_values": {
+        "330.0": 1,
+        "608.0": 1,
+        "299.0": 1,
+        "167.0": 1,
+        "282.0": 1
+      }
+    },
+    "UD r.o": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 55,
+      "top_values": {
+        "534.0": 2,
+        "440.0": 1,
+        "540.0": 1,
+        "139.0": 1,
+        "1356.0": 1
+      }
+    },
+    "UD o.a": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 53,
+      "top_values": {
+        "533.0": 2,
+        "382.0": 2,
+        "392.0": 2,
+        "423.0": 1,
+        "728.0": 1
+      }
+    },
+    "UD a.n": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 54,
+      "top_values": {
+        "393.0": 2,
+        "595.0": 2,
+        "386.0": 1,
+        "2185.0": 1,
+        "602.0": 1
+      }
+    },
+    "UD n.l": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 50,
+      "top_values": {
+        "133.0": 2,
+        "154.0": 2,
+        "168.0": 2,
+        "376.0": 2,
+        "202.0": 2
+      }
+    },
+    "UD l.Enter": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 55,
+      "top_values": {
+        "380.0": 2,
+        "436.0": 1,
+        "654.0": 1,
+        "234.0": 1,
+        "457.0": 1
+      }
+    },
+    "Pressure .": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 37,
+      "top_values": {
+        "0.0864000022411346": 5,
+        "0.0768000036478042": 4,
+        "0.182400003075599": 3,
+        "0.153600007295608": 3,
+        "0.0672000050544738": 2
+      }
+    },
+    "Pressure t": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 41,
+      "top_values": {
+        "0.10080000758171": 3,
+        "0.120000004768371": 3,
+        "0.263999998569488": 2,
+        "0.0576000027358531": 2,
+        "0.302400022745132": 2
+      }
+    },
+    "Pressure i": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 39,
+      "top_values": {
+        "0.302400022745132": 6,
+        "0.0768000036478042": 3,
+        "0.120000004768371": 3,
+        "0.144000008702278": 3,
+        "0.0912000015377998": 2
+      }
+    },
+    "Pressure e": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 37,
+      "top_values": {
+        "0.0672000050544738": 4,
+        "0.134400010108947": 3,
+        "0.0816000029444694": 3,
+        "0.148800000548362": 3,
+        "0.302400022745132": 3
+      }
+    },
+    "Pressure Shift": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 42,
+      "top_values": {
+        "0.105600006878376": 4,
+        "0.302400022745132": 3,
+        "0.096000000834465": 3,
+        "0.153600007295608": 2,
+        "0.0864000022411346": 2
+      }
+    },
+    "Pressure 5": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 36,
+      "top_values": {
+        "0.0816000029444694": 4,
+        "0.120000004768371": 4,
+        "0.072000004351139": 4,
+        "0.0864000022411346": 4,
+        "0.124800004065036": 3
+      }
+    },
+    "Pressure Shift.1": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 39,
+      "top_values": {
+        "0.302400022745132": 7,
+        "0.134400010108947": 4,
+        "0.105600006878376": 2,
+        "0.182400003075599": 2,
+        "0.10080000758171": 2
+      }
+    },
+    "Pressure Caps": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 35,
+      "top_values": {
+        "0.120000004768371": 7,
+        "0.139200001955032": 5,
+        "0.0768000036478042": 3,
+        "0.110400006175041": 2,
+        "0.0864000022411346": 2
+      }
+    },
+    "Pressure r": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 35,
+      "top_values": {
+        "0.115200005471706": 5,
+        "0.120000004768371": 5,
+        "0.10080000758171": 3,
+        "0.0816000029444694": 3,
+        "0.0864000022411346": 3
+      }
+    },
+    "Pressure o": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 33,
+      "top_values": {
+        "0.302400022745132": 6,
+        "0.0912000015377998": 4,
+        "0.115200005471706": 4,
+        "0.0864000022411346": 3,
+        "0.0768000036478042": 3
+      }
+    },
+    "Pressure a": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 43,
+      "top_values": {
+        "0.129600003361701": 4,
+        "0.105600006878376": 3,
+        "0.0816000029444694": 2,
+        "0.0864000022411346": 2,
+        "0.072000004351139": 2
+      }
+    },
+    "Pressure n": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 32,
+      "top_values": {
+        "0.115200005471706": 4,
+        "0.0912000015377998": 4,
+        "0.168000012636184": 4,
+        "0.144000008702278": 3,
+        "0.129600003361701": 3
+      }
+    },
+    "Pressure l": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 36,
+      "top_values": {
+        "0.0768000036478042": 5,
+        "0.0864000022411346": 4,
+        "0.0816000029444694": 4,
+        "0.168000012636184": 3,
+        "0.0624000020325183": 3
+      }
+    },
+    "Pressure Enter": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 38,
+      "top_values": {
+        "0.302400022745132": 9,
+        "0.124800004065036": 3,
+        "0.129600003361701": 3,
+        "0.0768000036478042": 2,
+        "0.153600007295608": 2
+      }
+    },
+    "Size .": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 15,
+      "top_values": {
+        "0.25806450843811": 11,
+        "0.225806444883346": 9,
+        "0.38709676265716497": 7,
+        "0.290322571992874": 7,
+        "0.322580635547637": 6
+      }
+    },
+    "Size t": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 13,
+      "top_values": {
+        "0.25806450843811": 15,
+        "0.290322571992874": 10,
+        "0.322580635547637": 7,
+        "0.225806444883346": 7,
+        "0.354838699102401": 3
+      }
+    },
+    "Size i": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 16,
+      "top_values": {
+        "0.25806450843811": 12,
+        "0.38709676265716497": 7,
+        "0.322580635547637": 6,
+        "0.354838699102401": 5,
+        "0.419354826211929": 5
+      }
+    },
+    "Size e": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 14,
+      "top_values": {
+        "0.290322571992874": 19,
+        "0.25806450843811": 7,
+        "0.451612889766693": 4,
+        "0.225806444883346": 4,
+        "0.193548381328582": 4
+      }
+    },
+    "Size Shift": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 14,
+      "top_values": {
+        "0.290322571992874": 15,
+        "0.354838699102401": 9,
+        "0.225806444883346": 7,
+        "0.322580635547637": 6,
+        "0.25806450843811": 4
+      }
+    },
+    "Size 5": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 11,
+      "top_values": {
+        "0.290322571992874": 16,
+        "0.225806444883346": 11,
+        "0.25806450843811": 9,
+        "0.193548381328582": 9,
+        "0.322580635547637": 3
+      }
+    },
+    "Size Shift.1": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 14,
+      "top_values": {
+        "0.290322571992874": 14,
+        "0.225806444883346": 8,
+        "0.322580635547637": 7,
+        "0.354838699102401": 6,
+        "0.25806450843811": 5
+      }
+    },
+    "Size Caps": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 8,
+      "top_values": {
+        "0.25806450843811": 17,
+        "0.290322571992874": 8,
+        "0.193548381328582": 8,
+        "0.225806444883346": 7,
+        "0.322580635547637": 7
+      }
+    },
+    "Size r": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 8,
+      "top_values": {
+        "0.225806444883346": 14,
+        "0.25806450843811": 13,
+        "0.290322571992874": 10,
+        "0.193548381328582": 9,
+        "0.354838699102401": 3
+      }
+    },
+    "Size o": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 16,
+      "top_values": {
+        "0.290322571992874": 18,
+        "0.25806450843811": 8,
+        "0.51612901687622": 4,
+        "0.193548381328582": 4,
+        "0.225806444883346": 4
+      }
+    },
+    "Size a": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 10,
+      "top_values": {
+        "0.290322571992874": 14,
+        "0.354838699102401": 8,
+        "0.25806450843811": 7,
+        "0.38709676265716497": 7,
+        "0.322580635547637": 6
+      }
+    },
+    "Size n": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 9,
+      "top_values": {
+        "0.290322571992874": 15,
+        "0.25806450843811": 13,
+        "0.354838699102401": 9,
+        "0.225806444883346": 7,
+        "0.322580635547637": 4
+      }
+    },
+    "Size l": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 12,
+      "top_values": {
+        "0.290322571992874": 13,
+        "0.25806450843811": 11,
+        "0.225806444883346": 11,
+        "0.354838699102401": 6,
+        "0.322580635547637": 4
+      }
+    },
+    "Size Enter": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 17,
+      "top_values": {
+        "0.322580635547637": 7,
+        "0.290322571992874": 7,
+        "0.419354826211929": 7,
+        "0.225806444883346": 6,
+        "0.451612889766693": 6
+      }
+    },
+    "AvH": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 55,
+      "top_values": {
+        "85.42857142857143": 2,
+        "88.07142857142857": 1,
+        "92.28571428571429": 1,
+        "97.35714285714286": 1,
+        "95.57142857142857": 1
+      }
+    },
+    "AvP": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 56,
+      "top_values": {
+        "0.19097143837383762": 1,
+        "0.30925715608256166": 1,
+        "0.11108571929591027": 1,
+        "0.42102859701429046": 1,
+        "0.33394287207296874": 1
+      }
+    },
+    "AvA": {
+      "dtype": "float64",
+      "n_missing": 28869,
+      "pct_missing": 0.9980639585133967,
+      "n_unique": 54,
+      "top_values": {
+        "0.26958524542195417": 2,
+        "0.2995391615799491": 2,
+        "0.2880184245961049": 1,
+        "0.42396311674799186": 1,
+        "0.38018432046685857": 1
+      }
+    },
+    "dataset": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "fermi": 3
+      }
+    },
+    "question": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "Lot's wife was turned into a pillar of salt. How much salt would that produce?": 1,
+        "How many hours from one full moon to the next?": 1,
+        "How much farmed land does one need to survive?": 1
+      }
+    },
+    "question_id": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "fermi/test_realfp/119": 1,
+        "fermi/test_realfp/176": 1,
+        "fermi/test_realfp/105": 1
+      }
+    },
+    "step_idx": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "1.0": 3
+      }
+    },
+    "full_answer": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "The average human body contains 100 grams of salt. The average human body weighs 150 pounds. Thus, the average human body contains 100 / 150 = 0.667 pounds of salt. So the final answer is: 0.667": 1,
+        "The moon takes 29.53 days to go from one full moon to the next. There are 24 hours in a day. So, 29.53 days * 24 hours in a day = 9736 hours. So the final answer is: 9736": 1,
+        "The amount of farmed land needed to survive depends on the type of food one consumes. Generally, it takes around 0.5 acres of land to produce enough food for one person for a year. Thus, one needs 0.5 acres of farmed land to survive. So the final answer is: 0.5": 1
+      }
+    },
+    "step": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "The average human body contains 100 grams of salt.": 1,
+        "The moon takes 29.53 days to go from one full moon to the next.": 1,
+        "The amount of farmed land needed to survive depends on the type of food one consumes.": 1
+      }
+    },
+    "decontextualized_step": {
+      "dtype": "object",
+      "n_missing": 28925,
+      "pct_missing": 1.0,
+      "n_unique": 0,
+      "top_values": {}
+    },
+    "attribution_relevance_label": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "Yes": 3
+      }
+    },
+    "attribution_relevance_majority": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 2,
+      "top_values": {
+        "5.0": 2,
+        "3.0": 1
+      }
+    },
+    "attribution_relevance_annotations": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 2,
+      "top_values": {
+        "['Yes', 'Yes', 'Yes', 'Yes', 'Yes']": 2,
+        "['No', 'Yes', 'Yes', 'Yes', 'No']": 1
+      }
+    },
+    "attribution_relevance_raters": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "['R3', 'R8', 'R0', 'R5', 'R1']": 1,
+        "['R10', 'R3', 'R8', 'R0', 'R1']": 1,
+        "['R3', 'R8', 'R9', 'R5', 'R1']": 1
+      }
+    },
+    "attribution_relevance_num_ratings": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "5.0": 3
+      }
+    },
+    "evidence_id": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "1.0": 3
+      }
+    },
+    "evidence": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "Dietary Reference Values, Current recommendations, Salt: The guideline salt intake for adults is about 6 grams of salt (approximately one teaspoon). The Food Standards Agency estimate the average salt intake is about 8.6 grams/day  (2008). A high salt diet is likely to increase the risk of high blood pressure, which is associated with an increased risk of heart attack and stroke.": 1,
+        "Adhik Maas, Scientific calculation: The Moon takes about 27.3 days to make one complete orbit around the earth. The earth orbits around the sun once every 365.2422 days (= earth's orbital speed of 29.79 km per second). The earth and the moon in 27.3 days have moved as a system about 1/12 of the way around the sun. This means that from one full moon to the next full moon, the moon must travel 2.2 extra days before it appears again as a full moon, due to the curve of the earth's orbit around the sun. Ultimately this creates a variance of 10.87 days a year between a lunar year and a solar year. To compensate for this difference, the additional month is added after every 32.5 months on average.": 1,
+        "Sustainable agriculture, Factors affecting sustainability: A farm that can \"produce perpetually\", yet has negative effects on environmental quality elsewhere is not sustainable agriculture. An example of a case in which a global view may be warranted is the application of fertilizer or manure, which can improve the productivity of a farm but can pollute nearby rivers and coastal waters (eutrophication). The other extreme can also be undesirable, as the problem of low crop yields due to exhaustion of nutrients in the soil has been related to rainforest destruction. In Asia, the specific amount of land needed for sustainable farming is about 12.5 acres which include land for animal fodder, cereal production as a cash crop, and other food crops. In some cases, a small unit of aquaculture is included (AARI-1996).": 1
+      }
+    },
+    "attribution_label": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "Unsupported": 3
+      }
+    },
+    "attribution_majority": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "5.0": 1,
+        "2.0": 1,
+        "3.0": 1
+      }
+    },
+    "attribution_annotations": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "['Unsupported', 'Unsupported', 'Unsupported', 'Unsupported', 'Unsupported']": 1,
+        "['Partially', 'Unsupported', 'Fully', 'Fully', 'Unsupported']": 1,
+        "['N/A', 'Unsupported', 'Unsupported', 'Unsupported', 'N/A']": 1
+      }
+    },
+    "attribution_raters": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "['R3', 'R8', 'R0', 'R5', 'R1']": 1,
+        "['R10', 'R3', 'R8', 'R0', 'R1']": 1,
+        "['R3', 'R8', 'R9', 'R5', 'R1']": 1
+      }
+    },
+    "attribution_num_ratings": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "5.0": 3
+      }
+    },
+    "attribution_justifications": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "['None of the evidence confirms that an average human body contains 100 grams of salt.', 'None of the evidences state how much salt is in the average human body', 'The claim in step 0 is unsupported because there is not value given for the average amount of salt in a human body.', 'no evidence to support the claim as it only states what the average daily salt intake is and not how much salt the average human body contains. ', 'Step 0 is unsupported because there is no evidence of the average amount of salt in a body.']": 1,
+        "[\"The evidence partially supports the claim as it states The earth and the moon in 27.3 days have moved as a system about 1/12 of the way around the sun. This means that from one full moon to the next full moon, the moon must travel 2.2 extra days before it appears again as a full moon, due to the curve of the earth's orbit around the sun. If you do the math that would equal 29.5. \", 'None of the evidence fully infers that the moon takes 29.53 days to go from one full moon to the next.\\n\\n', 'With a little math, the evidence does state it would take 29.5 days to go from one full moon to the next. (27.3 plus 2.2)', 'E1 fully supports the claim in step 0 by stating that the moon takes about 27.3 days to make one complete orbit, and then an extra 2.2 days before it appears as a full moon again, which is about 29.5, similar to that as mentioned in the claim.', 'Step 0 is fully supported by the evidence stating that the moon cycle is 29.53 days.']": 1,
+        "['N/A', 'None of the evidences really support this claim', 'The evidence does not say that the amount of farmed land needed to survive depends on the type of food one consumes.\\n\\n', 'no evidence provided that support this claim', 'N/A']": 1
+      }
+    },
+    "annotated_in_attribution_batch": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "['batch5', 'batch5', 'batch5', 'batch5', 'batch5']": 3
+      }
+    },
+    "type_label": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "Attribution step.": 3
+      }
+    },
+    "type_majority": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "5.0": 3
+      }
+    },
+    "type_annotations": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "['Attribution step.', 'Attribution step.', 'Attribution step.', 'Attribution step.', 'Attribution step.']": 3
+      }
+    },
+    "type_raters": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "['R1', 'R5', 'R0', 'R9', 'R8']": 1,
+        "['R8', 'R9', 'R0', 'R1', 'R5']": 1,
+        "['R5', 'R6', 'R0', 'R8', 'R1']": 1
+      }
+    },
+    "type_num_ratings": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "5.0": 3
+      }
+    },
+    "logic_relevance_label": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "Relevant": 3
+      }
+    },
+    "logic_relevance_majority": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 2,
+      "top_values": {
+        "5.0": 2,
+        "4.0": 1
+      }
+    },
+    "logic_relevance_annotations": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 2,
+      "top_values": {
+        "['Relevant', 'Relevant', 'Relevant', 'Relevant', 'Relevant']": 2,
+        "['Not relevant', 'Relevant', 'Relevant', 'Relevant', 'Relevant']": 1
+      }
+    },
+    "logic_relevance_raters": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "['R1', 'R5', 'R0', 'R9', 'R8']": 1,
+        "['R8', 'R9', 'R0', 'R1', 'R5']": 1,
+        "['R5', 'R6', 'R0', 'R8', 'R1']": 1
+      }
+    },
+    "logic_relevance_num_ratings": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "5.0": 3
+      }
+    },
+    "logic_justifications": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "['Step 1 adds that The average human body contains 100 grams of salt, but this is not relevant to the question.', 'brings new info on how much salt the average human body contain.', 'Relevant because it provides the details of how many grams of salt are in the body, on average.', 'The question is about how much salt that would produce, so it can be relevant that the average human body contains 100 grams of salt.\\n\\n\\n', 'States the average amount of salt in a human ']": 1,
+        "['States how long the moon takes to go to the next full moon', 'The question asks \"How many hours from one full moon to the next?\" So it could be relevant that the moon takes 29.53 days to go from one full moon to the next.\\n\\n\\n', 'Relevant because it provides the number of days that it takes from one full moon to the next, necessary to then convert to hours.', 'Step 1 adds that The moon takes 29.53 days to go from one full moon to the next.', 'brings new info on the time between 2 full moons.']": 1,
+        "['Brings new info that the amount of farmed land needed to survive depends on the type of food one consumes.\\n\\n', 'The bot introduces the information that the amount of farmed land needed to survive depends on the type of food one consumes.\\n', 'Relevant because it explains that the amount of food from a farm that humans need to survive absolutely depends on the type of food the person consumes.', 'States the amount of farmed land needed to survive depends on the type of food one consumes.', 'Step 1 adds that The amount of farmed land needed to survive depends on the type of food one consumes.']": 1
+      }
+    },
+    "annotated_in_logic_batch": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "['batch5', 'batch5', 'batch5', 'batch5', 'batch5']": 3
+      }
+    },
+    "correctness_label": {
+      "dtype": "object",
+      "n_missing": 28925,
+      "pct_missing": 1.0,
+      "n_unique": 0,
+      "top_values": {}
+    },
+    "correctness_majority": {
+      "dtype": "float64",
+      "n_missing": 28925,
+      "pct_missing": 1.0,
+      "n_unique": 0,
+      "top_values": {}
+    },
+    "correctness_annotations": {
+      "dtype": "object",
+      "n_missing": 28925,
+      "pct_missing": 1.0,
+      "n_unique": 0,
+      "top_values": {}
+    },
+    "correctness_raters": {
+      "dtype": "object",
+      "n_missing": 28925,
+      "pct_missing": 1.0,
+      "n_unique": 0,
+      "top_values": {}
+    },
+    "correctness_num_ratings": {
+      "dtype": "float64",
+      "n_missing": 28925,
+      "pct_missing": 1.0,
+      "n_unique": 0,
+      "top_values": {}
+    },
+    "answer_id": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "fermi/test_realfp/119//Flan-PaLM-540B": 1,
+        "fermi/test_realfp/176//Flan-UL2-20B": 1,
+        "fermi/test_realfp/105//GPT-3": 1
+      }
+    },
+    "attribution_majority_all_evidences": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "5.0": 1,
+        "2.0": 1,
+        "3.0": 1
+      }
+    },
+    "attribution_majority_all_steps": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "2.0": 3
+      }
+    },
+    "logic_majority_all_steps": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 3,
+      "top_values": {
+        "3.0": 1,
+        "4.0": 1,
+        "5.0": 1
+      }
+    },
+    "agreement_majority_all_steps": {
+      "dtype": "float64",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "2.0": 3
+      }
+    },
+    "is_low_agreement_hard_case": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "True": 3
+      }
+    },
+    "contamination_identifier": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "Reveal:Mn12GAs2I3S0eWjbTUFC0Y51ijGFB7rGBLnzGGhCQ7OtJPfVg7e6qt9zb5RPL36U": 3
+      }
+    },
+    "is_final_rated_evidence_for_step": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 2,
+      "top_values": {
+        "False": 2,
+        "True": 1
+      }
+    },
+    "answer_is_fully_attributable": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "False": 3
+      }
+    },
+    "answer_is_logically_correct": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 2,
+      "top_values": {
+        "False": 2,
+        "True": 1
+      }
+    },
+    "answer_is_fully_attributable_and_correct": {
+      "dtype": "object",
+      "n_missing": 28922,
+      "pct_missing": 0.9998962834917892,
+      "n_unique": 1,
+      "top_values": {
+        "False": 3
+      }
+    }
+  }
+}

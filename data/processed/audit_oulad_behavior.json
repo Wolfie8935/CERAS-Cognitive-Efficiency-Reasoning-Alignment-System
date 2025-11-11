@@ -1,0 +1,205 @@
+{
+  "name": "oulad_behavior",
+  "rows": 32593,
+  "cols": 16,
+  "columns": {
+    "code_module": {
+      "dtype": "object",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 7,
+      "top_values": {
+        "BBB": 7909,
+        "FFF": 7762,
+        "DDD": 6272,
+        "CCC": 4434,
+        "EEE": 2934
+      }
+    },
+    "code_presentation": {
+      "dtype": "object",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 4,
+      "top_values": {
+        "2014J": 11260,
+        "2013J": 8845,
+        "2014B": 7804,
+        "2013B": 4684
+      }
+    },
+    "student_id": {
+      "dtype": "int64",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 28785,
+      "top_values": {
+        "584077": 5,
+        "542562": 4,
+        "546400": 4,
+        "596620": 4,
+        "2681198": 4
+      }
+    },
+    "gender": {
+      "dtype": "object",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 2,
+      "top_values": {
+        "M": 17875,
+        "F": 14718
+      }
+    },
+    "region": {
+      "dtype": "object",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 13,
+      "top_values": {
+        "Scotland": 3446,
+        "East Anglian Region": 3340,
+        "London Region": 3216,
+        "South Region": 3092,
+        "North Western Region": 2906
+      }
+    },
+    "highest_education": {
+      "dtype": "object",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 5,
+      "top_values": {
+        "A Level or Equivalent": 14045,
+        "Lower Than A Level": 13158,
+        "HE Qualification": 4730,
+        "No Formal quals": 347,
+        "Post Graduate Qualification": 313
+      }
+    },
+    "imd_band": {
+      "dtype": "object",
+      "n_missing": 1111,
+      "pct_missing": 0.03408707391157611,
+      "n_unique": 10,
+      "top_values": {
+        "20-30%": 3654,
+        "30-40%": 3539,
+        "10-20": 3516,
+        "0-10%": 3311,
+        "40-50%": 3256
+      }
+    },
+    "age_band": {
+      "dtype": "object",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 3,
+      "top_values": {
+        "0-35": 22944,
+        "35-55": 9433,
+        "55<=": 216
+      }
+    },
+    "num_of_prev_attempts": {
+      "dtype": "int64",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 7,
+      "top_values": {
+        "0": 28421,
+        "1": 3299,
+        "2": 675,
+        "3": 142,
+        "4": 39
+      }
+    },
+    "studied_credits": {
+      "dtype": "int64",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 61,
+      "top_values": {
+        "60": 16751,
+        "120": 6328,
+        "30": 3749,
+        "90": 3144,
+        "180": 830
+      }
+    },
+    "disability": {
+      "dtype": "object",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 2,
+      "top_values": {
+        "N": 29429,
+        "Y": 3164
+      }
+    },
+    "final_result": {
+      "dtype": "object",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 4,
+      "top_values": {
+        "Pass": 12361,
+        "Withdrawn": 10156,
+        "Fail": 7052,
+        "Distinction": 3024
+      }
+    },
+    "oulad_avg_assessment_score": {
+      "dtype": "float64",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 3187,
+      "top_values": {
+        "0.0": 5898,
+        "80.0": 220,
+        "70.0": 192,
+        "75.0": 191,
+        "76.0": 176
+      }
+    },
+    "oulad_n_assessments": {
+      "dtype": "float64",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 28,
+      "top_values": {
+        "0.0": 5847,
+        "12.0": 3648,
+        "5.0": 2894,
+        "7.0": 2463,
+        "11.0": 2353
+      }
+    },
+    "oulad_avg_clicks": {
+      "dtype": "float64",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 20480,
+      "top_values": {
+        "0.0": 2852,
+        "1.0": 222,
+        "2.0": 220,
+        "1.5": 109,
+        "3.0": 109
+      }
+    },
+    "oulad_active_days": {
+      "dtype": "float64",
+      "n_missing": 0,
+      "pct_missing": 0.0,
+      "n_unique": 286,
+      "top_values": {
+        "0.0": 2852,
+        "1.0": 630,
+        "2.0": 522,
+        "3.0": 427,
+        "4.0": 413
+      }
+    }
+  }
+}
