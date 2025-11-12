@@ -6,3 +6,4 @@ data/anonymisedData/
 data/processed/
 .vscode
 __pycache__/
+.pytest_cache/
