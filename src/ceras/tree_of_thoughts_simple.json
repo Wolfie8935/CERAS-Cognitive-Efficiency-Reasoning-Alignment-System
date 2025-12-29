@@ -1,0 +1,76 @@
+{
+  "tree_id": "98376352-5168-411a-a33c-fe365e644785",
+  "root_id": "09f2e6e5-a0d2-4648-8a14-e149c9933972",
+  "nodes": {
+    "09f2e6e5-a0d2-4648-8a14-e149c9933972": {
+      "id": "09f2e6e5-a0d2-4648-8a14-e149c9933972",
+      "parent_id": null,
+      "text": "what are trignometric identities and how can we solve (51^2 - 49^2) efficiently using them?",
+      "role": "root",
+      "scores": {},
+      "metadata": {
+        "ts": 1767007755.5471323
+      },
+      "children": [
+        "dc3ed3b3-02a0-4182-9992-c1664d76bd4f",
+        "8a10a98d-4c3a-42c2-abbe-b6c0d3b7b5e9",
+        "e8a3b189-2a23-4ff2-b160-4dd12f9021cb",
+        "35658ec9-539d-4bb9-9e32-ea999fafca38"
+      ],
+      "created_at": 1767007755.548339,
+      "embedding": null
+    },
+    "dc3ed3b3-02a0-4182-9992-c1664d76bd4f": {
+      "id": "dc3ed3b3-02a0-4182-9992-c1664d76bd4f",
+      "parent_id": "09f2e6e5-a0d2-4648-8a14-e149c9933972",
+      "text": "Define trigonometric identities.",
+      "role": "subtask",
+      "scores": {},
+      "metadata": {
+        "source": "decomposer"
+      },
+      "children": [],
+      "created_at": 1767007762.8615813,
+      "embedding": null
+    },
+    "8a10a98d-4c3a-42c2-abbe-b6c0d3b7b5e9": {
+      "id": "8a10a98d-4c3a-42c2-abbe-b6c0d3b7b5e9",
+      "parent_id": "09f2e6e5-a0d2-4648-8a14-e149c9933972",
+      "text": "List common trigonometric identities used for simplification.",
+      "role": "subtask",
+      "scores": {},
+      "metadata": {
+        "source": "decomposer"
+      },
+      "children": [],
+      "created_at": 1767007762.8615813,
+      "embedding": null
+    },
+    "e8a3b189-2a23-4ff2-b160-4dd12f9021cb": {
+      "id": "e8a3b189-2a23-4ff2-b160-4dd12f9021cb",
+      "parent_id": "09f2e6e5-a0d2-4648-8a14-e149c9933972",
+      "text": "Write the expression 51^2 - 49^2 to be solved using a trigonometric identity.",
+      "role": "subtask",
+      "scores": {},
+      "metadata": {
+        "source": "decomposer"
+      },
+      "children": [],
+      "created_at": 1767007762.8615813,
+      "embedding": null
+    },
+    "35658ec9-539d-4bb9-9e32-ea999fafca38": {
+      "id": "35658ec9-539d-4bb9-9e32-ea999fafca38",
+      "parent_id": "09f2e6e5-a0d2-4648-8a14-e149c9933972",
+      "text": "Solve the given expression using a chosen trigonometric identity.",
+      "role": "subtask",
+      "scores": {},
+      "metadata": {
+        "source": "decomposer"
+      },
+      "children": [],
+      "created_at": 1767007762.8615813,
+      "embedding": null
+    }
+  }
+}

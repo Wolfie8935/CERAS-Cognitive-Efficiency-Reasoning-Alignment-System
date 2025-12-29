@@ -1,0 +1,76 @@
+{
+  "tree_id": "63ba7821-0e82-46db-8439-ef335edcc597",
+  "root_id": "f701aa3d-0582-4cc8-b705-742fb173eb4e",
+  "nodes": {
+    "f701aa3d-0582-4cc8-b705-742fb173eb4e": {
+      "id": "f701aa3d-0582-4cc8-b705-742fb173eb4e",
+      "parent_id": null,
+      "text": "what are trignometric identities and how can we solve (51^2 - 49^2) efficiently using them?",
+      "role": "root",
+      "scores": {},
+      "metadata": {
+        "ts": 1767008608.3982012
+      },
+      "children": [
+        "18b7a46a-8d22-462c-a2f4-9045fd2d8bd9",
+        "5a12cbe6-c046-4773-8128-25c392052fbd",
+        "b1aafbe0-3a58-40bc-be8c-79f9771a896c",
+        "9c525003-bc6b-40a3-ae11-c3ff09b30488"
+      ],
+      "created_at": 1767008608.3982012,
+      "embedding": null
+    },
+    "18b7a46a-8d22-462c-a2f4-9045fd2d8bd9": {
+      "id": "18b7a46a-8d22-462c-a2f4-9045fd2d8bd9",
+      "parent_id": "f701aa3d-0582-4cc8-b705-742fb173eb4e",
+      "text": "Research and identify key trigonometric identities.",
+      "role": "subtask",
+      "scores": {},
+      "metadata": {
+        "source": "decomposer"
+      },
+      "children": [],
+      "created_at": 1767008616.3122694,
+      "embedding": null
+    },
+    "5a12cbe6-c046-4773-8128-25c392052fbd": {
+      "id": "5a12cbe6-c046-4773-8128-25c392052fbd",
+      "parent_id": "f701aa3d-0582-4cc8-b705-742fb173eb4e",
+      "text": "Determine which identity applies to solving (51^2 - 49^2).",
+      "role": "subtask",
+      "scores": {},
+      "metadata": {
+        "source": "decomposer"
+      },
+      "children": [],
+      "created_at": 1767008616.3122694,
+      "embedding": null
+    },
+    "b1aafbe0-3a58-40bc-be8c-79f9771a896c": {
+      "id": "b1aafbe0-3a58-40bc-be8c-79f9771a896c",
+      "parent_id": "f701aa3d-0582-4cc8-b705-742fb173eb4e",
+      "text": "Break down the expression into a form suitable for applying the selected identity.",
+      "role": "subtask",
+      "scores": {},
+      "metadata": {
+        "source": "decomposer"
+      },
+      "children": [],
+      "created_at": 1767008616.3122694,
+      "embedding": null
+    },
+    "9c525003-bc6b-40a3-ae11-c3ff09b30488": {
+      "id": "9c525003-bc6b-40a3-ae11-c3ff09b30488",
+      "parent_id": "f701aa3d-0582-4cc8-b705-742fb173eb4e",
+      "text": "Apply the chosen identity to simplify the expression.",
+      "role": "subtask",
+      "scores": {},
+      "metadata": {
+        "source": "decomposer"
+      },
+      "children": [],
+      "created_at": 1767008616.3122694,
+      "embedding": null
+    }
+  }
+}
