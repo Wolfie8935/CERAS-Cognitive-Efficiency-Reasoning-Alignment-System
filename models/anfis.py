@@ -21,7 +21,7 @@ os.makedirs(artifact_dir, exist_ok=True)
 id_col = "cntstuid"
 target = "ce_score"
 
-#Cognitive Feature Refinement Pipeline (Four-Layer)
+#Cognitive Feature Refinement Selection (Four-Layer Pipeline)
 #MI → RFE → LASSO → Boruta
 
 #Phase A: PISA Only (Cognitive)
