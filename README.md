@@ -10,6 +10,7 @@
 
 **CERAS** is a **Solver-Grounded, Multi-Verifier AI Tutor** that measures *cognitive learning readiness* in real-time. It goes beyond simple chatbots by "thinking" before it answers—using a **Tree-of-Thoughts (ToT)** architecture to decompose problems, verify logic, and adapt its teaching style based on the student's cognitive load.
 
+
 ---
 
 ## 🏗️ System Architecture
@@ -17,33 +18,52 @@
 The core of CERAS is a **System 2 Reasoning Engine** that separates *planning* (decomposition) from *execution* (solving) and *verification*.
 
 ```mermaid
-graph TD
-    User[Student] -->|Query| Streamlit[Streamlit Dashboard]
+---
+config:
+  layout: elk
+  theme: redux
+  look: neo
+---
+flowchart TB
+ subgraph subGraph0["Offline Processing"]
+        Data["Raw Data: PISA, OULAD, MEU, Reveal"]
+        Preprocess["Data Processing & Fusion"]
+        Features["Feature Engineering"]
+        CEPM["Cognitive Efficiency Model - CEPM"]
+        Explain["Explainability & Intent Modeling - CNN + ANFIS"]
+  end
+ subgraph subGraph1["Online Reasoning"]
+        UI["App UI"]
+        Orchestrator["Reasoning Engine with Verifiers + GROQ API"]
+        ToT["Customized Tree-of-Thought Reasoning"]
+        LLM["LLM-based Strategy & Verification via LLM Council"]
+  end
+    User["Student"] -- Query --> UI
+    Data --> Preprocess
+    Preprocess --> Features
+    Features --> CEPM & Explain
+    UI --> Orchestrator
+    Orchestrator --> ToT & LLM
+    CEPM -- CE Score --> Adaptive["Adaptive Response Engine"]
+    Explain -- CE Score Analyzer --> Adaptive
+    ToT -- STEP Breakdown --> Adaptive
+    Adaptive -- Personalized Feedback --> UI
 
-    subgraph Reasoning_Engine_Online ["🧠 Solver-Grounded Engine (Groq)"]
-        Streamlit -->|Input| Pipeline
-        
-        Pipeline -->|1. Decompose| Decomposer[Llama 3.3-70b\nStrategy Proposer]
-        Decomposer -->|Strategy| ToT[Tree of Thoughts\nData Structure]
-        
-        ToT -->|2. Solve| Solver[Llama 3.3-70b\nStep Generator]
-        Solver -->|Draft Steps| Verifier1
-
-        subgraph Verification_Loop ["⚡ Multi-Stage Verification"]
-            Verifier1[Gatekeeper\nLlama 3.1-8b] -- Rejected --> Solver
-            Verifier1 -- Approved --> Verifier2[Quality Audit\nLlama 3.1-8b]
-        end
-
-        Verifier2 -->|Verified Steps| ToT
-    end
-
-    subgraph Cognitive_Layer ["👁️ Cognitive Efficiency (CE)"]
-        Streamlit -->|Behavioral Signals| CEPM[CEPM Model\n(Time/Focus/Clicks)]
-        CEPM -->|CE Score (0-1)| Adaptive[Adaptive Response\nTheory of Mind]
-        
-        Verification_Loop -.->|Logic Quality| Adaptive
-        Adaptive -->|Personalized Output| Streamlit
-    end
+     Data:::offline
+     Preprocess:::offline
+     Features:::offline
+     CEPM:::offline
+     Explain:::offline
+     UI:::online
+     Orchestrator:::online
+     ToT:::online
+     LLM:::online
+     User:::ui
+     Adaptive:::adaptive
+    classDef offline fill:#E3F2FD,stroke:#1E88E5,stroke-width:1.5px,color:#0D47A1
+    classDef online fill:#E8F5E9,stroke:#43A047,stroke-width:1.5px,color:#1B5E20
+    classDef adaptive fill:#F3E5F5,stroke:#8E24AA,stroke-width:1.5px,color:#4A148C
+    classDef ui fill:#FFF3E0,stroke:#FB8C00,stroke-width:1.5px,color:#E65100
 ```
 
 ---
@@ -125,26 +145,107 @@ A modern Streamlit UI providing:
 ## 📂 Project Structure
 
 ```text
-ceras/
-├── artifacts/              # Model weights (CEPM, CNN, ANFIS)
-├── src/ceras/
-│   ├── interface/          # UI Logic
-│   │   └── streamlit_app.py  # Main Dashboard
-│   ├── reasoning/          # AI Reasoning Layer
-│   │   ├── llm_utils.py      # Groq Interface & Prompts
-│   │   ├── decomposer.py     # Strategy Generator
-│   │   └── verifier.py       # Logic Gatekeeper
-│   ├── models/             # ML Models
-│   │   └── cepm.py           # Cognitive Efficiency Predictor
-│   └── pipeline_1.py       # Main Orchestrator
-├── environment.yml         # Dependencies
-└── LICENSE                 # Proprietary License
+├── 📁 artifacts
+│   ├── 📄 anfis_features.npy
+│   ├── 📄 anfis_model.pkl
+│   ├── 📄 cepm_features.npy
+│   ├── 📄 cepm_lightgbm.pkl
+│   ├── 📄 cepm_scaler.pkl
+│   ├── 📄 cnn_ce_model.keras
+│   └── 📄 cnn_features.npy
+├── 📁 data
+│   ├── 📝 README.md
+│   ├── 📄 data_clean_and_explore.ipynb
+│   ├── 📄 download_data.ipynb
+│   └── 📄 pisa_data.ipynb
+├── 📁 docs
+│   ├── 📝 archi.md
+│   ├── 🖼️ image.png
+│   └── 📝 literature_survey.md
+├── 📁 experiments
+│   └── 🐍 run_experiment.py
+├── 📁 features
+│   ├── 🐍 feature_quality.py
+│   └── 🐍 featurize.py
+├── 📁 graphs
+│   ├── 📄 intention_cluster_means.csv
+│   ├── 🖼️ intention_cluster_means.png
+│   ├── 🖼️ shap_bar.png
+│   └── 🖼️ shap_summary.png
+├── 📁 models
+│   ├── 🐍 anfis.py
+│   ├── 🐍 cepm.py
+│   └── 🐍 cnn.py
+├── 📁 monitoring
+│   ├── 🐍 alerts.py
+│   └── 🐍 reports.py
+├── 📁 notebooks
+│   ├── 📄 01_data_explore.ipynb
+│   └── 📄 02_baseline_model.ipynb
+├── 📁 outputs
+│   └── ⚙️ .gitkeep
+├── 📁 postprocess
+│   ├── 🐍 calibrator.py
+│   └── 🐍 model_monitor.py
+├── 📁 postprocess_store
+│   └── 📄 ce_calibrator.joblib
+├── 📁 preprocess
+│   ├── 🐍 auditor.py
+│   ├── 🐍 ce_builder.py
+│   ├── 🐍 cog_student.py
+│   ├── 🐍 questionnaire_student.py
+│   └── 🐍 signal_fusion.py
+├── 📁 src
+│   ├── 📁 ceras
+│   │   ├── 🐍 CAMRE_EDU.py
+│   │   ├── 🐍 __init__.py
+│   │   ├── 📄 edu_module_tests.ipynb
+│   │   ├── 📄 experiments.ipynb
+│   │   ├── 🐍 fusion.py
+│   │   ├── 🐍 inference.py
+│   │   ├── 🐍 llm_utils.py
+│   │   ├── 🐍 main.py
+│   │   ├── 🐍 pipeline_1.py
+│   │   ├── 📝 project.md
+│   │   ├── 🐍 streamlit_app.py
+│   │   ├── 📄 testing.ipynb
+│   │   ├── 🐍 tree_of_thoughts.py
+│   │   ├── ⚙️ tree_of_thoughts_example.json
+│   │   └── ⚙️ tree_of_thoughts_simple.json
+│   └── 📁 ceras.egg-info
+│       ├── 📄 PKG-INFO
+│       ├── 📄 SOURCES.txt
+│       ├── 📄 dependency_links.txt
+│       └── 📄 top_level.txt
+├── 📁 tests
+│   ├── 🐍 test_features.py
+│   ├── 🐍 test_monitoring.py
+│   ├── 🐍 test_postprocess.py
+│   └── 🐍 test_preprocess.py
+├── ⚙️ .gitignore
+├── 📄 LICENSE
+├── 📝 README.md
+├── 🐍 check_conn_simple.py
+├── 🐍 data_loader.py
+├── 🐍 data_loader_pisa.py
+├── 🐍 debug_decomposition.py
+├── ⚙️ environment.yml
+├── 📝 final_architecture.md
+├── ⚙️ pyproject.toml
+├── ⚙️ pytest.ini
+├── 📄 requirements.txt
+├── 🐍 run_calibrator.py
+├── 🐍 run_preprocess.py
+├── 🐍 test_model_names.py
+├── ⚙️ tree_of_thoughts_example.json
+├── 🖼️ tree_of_thoughts_substantive.png
+└── 🐍 verify_groq_connection.py
 ```
 
 ---
 
 ## 📜 License
 
-**Copyright (c) 2026 Wolfie8935. All Rights Reserved.**
+**Copyright (c) 2026 Wolfie8935 and Rishaan08. All Rights Reserved.**
 
 This software is provided for reference only. You may view the code, but you may not use, copy, modify, merge, publish, or distribute it without explicit written permission. See [LICENSE](LICENSE) for full text.
