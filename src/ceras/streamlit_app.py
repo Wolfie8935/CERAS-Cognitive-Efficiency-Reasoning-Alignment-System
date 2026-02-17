@@ -13,7 +13,7 @@ from fusion import CERASFusion
 #Page Configuration
 st.set_page_config(
     page_title="CERAS",
-    page_icon="📖",
+    page_icon="🧠",
     layout="wide",
 )
 
@@ -152,7 +152,7 @@ def set_prompt(text):
     st.session_state.auto_run = False
 
 
-# ===================== GOOD EXAMPLES =====================
+#Good Examples
 st.markdown("### 🌟 GOOD EXAMPLES TO PROMPT (High CE Score)")
 st.caption("These prompts are detailed and structured, leading to higher cognitive efficiency scores.")
 
@@ -161,7 +161,7 @@ gp2 = "Describe the biological process of photosynthesis in plants, detailing th
 gp3 = "Analyze the profound historical impact of the Gutenberg printing press on European society during the Renaissance. Discuss how it facilitated the spread of literacy, the standardization of languages, the dissemination of scientific knowledge, and the religious shifts associated with the Reformation, ultimately reshaping the cultural and intellectual landscape. Consider the long-term effects on democratization of information."
 gp4 = "Compare and contrast supervised and unsupervised machine learning paradigms. Explain the key differences in their training data requirements, with supervised learning using labeled datasets and unsupervised learning finding patterns in unlabeled data. Provide specific examples of algorithms and real-world applications for each approach, such as classification versus clustering. Discuss the trade-offs in terms of data preparation and model interpretability."
 
-# Layout: 2 Columns x 2 Rows for better readability
+#Layout: 2 Columns x 2 Rows for better readability
 c1, c2 = st.columns(2)
 
 with c1:
@@ -192,7 +192,7 @@ if st.session_state.auto_run:
      # actually simply calling set_prompt inside the if block works because we rerun immediately).
      pass 
 
-# ===================== BAD EXAMPLES =====================
+#Bad Examples
 st.markdown("### ⚠️ BAD EXAMPLES TO PROMPT (Low CE Score)")
 st.caption("These prompts are too short or vague, leading to lower cognitive efficiency scores.")
 
@@ -252,11 +252,11 @@ run_btn = st.button("▶ Run Learning Session")
 #Run Pipeline
 if (run_btn or st.session_state.auto_run) and prompt.strip():
     
-    # Reset auto_run so it doesn't loop
+    #Reset auto_run so it doesn't loop
     if st.session_state.auto_run:
         st.session_state.auto_run = False
     
-    # Calculate User Latency (Formulation Time)
+    #Calculate User Latency (Formulation Time)
     st.session_state.formulation_time = time.time() - st.session_state.start_time
     
     with st.spinner("Running reasoning engine..."):
@@ -323,11 +323,11 @@ if should_run and prompt.strip():
         with st.spinner("Generating personalized learning summary..."):
              st.session_state.adaptive_res = generate_adaptive_response(prompt, final_steps, fused_score, diagnostics)
 
-# Render Results if available
+#Render Results if available
 if "current_result" in st.session_state and st.session_state.current_result is not None:
     result = st.session_state.current_result
     runtime = st.session_state.current_runtime
-    # Use the prompt that generated the result for scoring to ensure consistency
+    #Use the prompt that generated the result for scoring to ensure consistency
     result_prompt = st.session_state.current_prompt
 
     #Final Answer
@@ -390,7 +390,7 @@ if "current_result" in st.session_state and st.session_state.current_result is n
     #Live Data Visulaization
     st.markdown("### Live Cognitive Signals")
     
-    # Create a visual dashboard for the signals
+    #Create a visual dashboard for the signals
     sig_col1, sig_col2, sig_col3 = st.columns(3)
     
     with sig_col1:
