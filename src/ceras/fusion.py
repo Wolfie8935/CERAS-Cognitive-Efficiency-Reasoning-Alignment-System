@@ -1,15 +1,14 @@
+#Imports
 import numpy as np
 import pandas as pd
 
-
 class CERASFusion:
     """
-    Fusion engine for CERAS.
+    Fusion engine for CIMS (Cognitive Interaction Modeling System).
 
     Combines:
-    - CEPM (cognitive strength)
-    - calibrated CNN (behavioral patterns)
-    - ANFIS (reasoning alignment)
+    - CEPM (core CE regressor)
+    - CNN (behavioral modeling)
 
     Produces:
     - fused CE score
@@ -20,14 +19,12 @@ class CERASFusion:
 
     def __init__(
         self,
-        w_cepm=0.5,
-        w_cnn=0.35,
-        w_anfis=0.15,
+        w_cepm = 0.6,
+        w_cnn = 0.4,        
         disagreement_threshold=0.25
     ):
         self.w_cepm = w_cepm
         self.w_cnn = w_cnn
-        self.w_anfis = w_anfis
         self.disagreement_threshold = disagreement_threshold
 
     #Core Helpers
@@ -53,42 +50,56 @@ class CERASFusion:
         else:
             return "At Risk"
 
-    #Diagnostics 
-    def _diagnostics(self, cepm, cnn, anfis):
+    #Diagnostics
+    def _diagnostics(self, cepm, cnn):
         return {
             "concept_gap": bool(cepm < 0.45),
             "effort_gap": bool(cnn < 0.45),
-            "strategy_gap": bool(anfis < 0.40),
             "high_disagreement": bool(
                 abs(float(cepm) - float(cnn)) > self.disagreement_threshold
             )
         }
 
-    #Confidence 
+    #Confidence
     def _confidence(self, cepm, cnn):
+        """
+        Confidence based on agreement between models.
+        Lower disagreement → higher confidence.
+        """
         cepm = float(self._clip01(cepm))
         cnn = float(self._clip01(cnn))
-        return float(1.0 - abs(cepm - cnn))
+
+        disagreement = abs(cepm - cnn)
+        return float(1.0 - disagreement)
 
     #Main Fusion API
     def fuse(
         self,
-        student_ids,
         cepm_scores,
         cnn_scores,
-        anfis_scores
+        session_ids=None
     ) -> pd.DataFrame:
 
         cepm = self._clip01(self._to_numpy(cepm_scores))
         cnn = self._clip01(self._to_numpy(cnn_scores))
-        anfis = self._clip01(self._to_numpy(anfis_scores))
+
+        if session_ids is None:
+            session_ids = list(range(len(cepm)))
 
         #Weighted Fusion
-        fused_raw = (
+        base = (
             self.w_cepm * cepm +
-            self.w_cnn * cnn +
-            self.w_anfis * anfis
+            self.w_cnn * cnn
         )
+
+        #Agreement-based Nonlinear Boost
+        agreement = 1.0 - np.abs(cepm - cnn)
+
+        #CEPM dominance factor (boost when CEPM strong)
+        dominance = 0.7 * cepm + 0.3 * agreement
+
+        #Smooth nonlinear amplifier
+        fused_raw = base + 0.15 * dominance * base
 
         fused_raw = self._clip01(fused_raw)
 
@@ -96,34 +107,19 @@ class CERASFusion:
         diagnostics = []
         confidence = []
 
-        for c, b, a in zip(cepm, cnn, anfis):
-            diagnostics.append(self._diagnostics(c, b, a))
+        for c, b in zip(cepm, cnn):
+            diagnostics.append(self._diagnostics(c, b))
             confidence.append(self._confidence(c, b))
 
         confidence = np.array(confidence, dtype=float)
 
-        #ANFIS-aware Adjustment
-        fused_adjusted = fused_raw.copy()
-
-        for i, d in enumerate(diagnostics):
-            if d["strategy_gap"]:
-                fused_adjusted[i] -= 0.05
-            elif (
-                not d["concept_gap"]
-                and not d["effort_gap"]
-                and anfis[i] >= 0.50
-            ):
-                fused_adjusted[i] += 0.05
-
-        fused_adjusted = self._clip01(fused_adjusted)
-
         #Readiness Labels
-        labels = [self._readiness_label(s) for s in fused_adjusted]
+        labels = [self._readiness_label(s) for s in fused_raw]
 
         #Output Table
         return pd.DataFrame({
-            "student_id": student_ids,
-            "fused_ce_score": fused_adjusted.astype(float),
+            "session_id": session_ids,
+            "fused_ce_score": fused_raw.astype(float),
             "readiness_label": labels,
             "confidence": confidence.astype(float),
             "diagnostics": diagnostics

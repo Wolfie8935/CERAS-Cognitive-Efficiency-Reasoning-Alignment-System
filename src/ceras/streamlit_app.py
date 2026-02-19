@@ -3,6 +3,44 @@ import time
 import json
 from datetime import datetime
 import numpy as np
+import os
+import sys
+import joblib
+import tensorflow as tf
+import re
+
+artifact_dir = "./artifacts"
+
+#Load trained model
+@st.cache_resource
+def load_models():
+    cepm_model = joblib.load(os.path.join(artifact_dir, "cepm_lightgbm.pkl"))
+    cepm_scaler = joblib.load(os.path.join(artifact_dir, "cepm_scaler.pkl"))
+
+    cnn_model = tf.keras.models.load_model(os.path.join(artifact_dir, "cnn_ce_model.keras"))
+    cnn_scaler = joblib.load(os.path.join(artifact_dir, "cnn_scaler.pkl"))
+
+    # Load selected feature names
+    cepm_features = np.load(os.path.join(artifact_dir, "cepm_features.npy"), allow_pickle=True).tolist()
+    cnn_features = np.load(os.path.join(artifact_dir, "cnn_features.npy"), allow_pickle=True).tolist()
+
+    return (
+        cepm_model,
+        cepm_scaler,
+        cnn_model,
+        cnn_scaler,
+        cepm_features,
+        cnn_features
+    )
+
+(
+    cepm_model,
+    cepm_scaler,
+    cnn_model,
+    cnn_scaler,
+    cepm_features,
+    cnn_features
+) = load_models()
 
 #Reasoning pipeline
 from pipeline_1 import main as run_infer
@@ -76,7 +114,6 @@ neuro-fuzzy alignment, CERAS provides a personalized learning experience. It ana
 through deep concepts with tailored roadmaps, ensuring you don't just get answers, but truly master the material.
 """)
 
-
 #Sidebar
 with st.sidebar:
 
@@ -123,7 +160,6 @@ with st.sidebar:
             <p style="margin:8px 0;"> 🧩 <b>ToT-LLM</b><br><span style="color:#94a3b8;">Tree-of-Thoughts Reasoning Engine</span></p>
             <p style="margin:8px 0;"> 🧠 <b>CEPM</b><br><span style="color:#94a3b8;">Cognitive Engagement Modeling</span></p>
             <p style="margin:8px 0;"> 👁️ <b>CNN-Vis</b><br><span style="color:#94a3b8;">Behavioral Signal Analysis</span></p>
-            <p style="margin:8px 0;"> ⚖️ <b>ANFIS</b><br><span style="color:#94a3b8;">Neuro-Fuzzy Logic Alignment</span></p>
             <p style="margin:8px 0;"> 🔗 <b>Fusion Layer</b><br><span style="color:#94a3b8;">Multi-Modal Signal Integration</span></p>
         </div>
         """,
@@ -131,7 +167,6 @@ with st.sidebar:
     )
 
     st.caption("v1.2.0 • Neural Learning Stack")
-
 
 #Session State
 if "start_time" not in st.session_state:
@@ -151,79 +186,78 @@ def set_prompt(text):
     # Disable auto-run, user wants to manually click run
     st.session_state.auto_run = False
 
-
 #Good Examples
 st.markdown("### 🌟 GOOD EXAMPLES TO PROMPT (High CE Score)")
 st.caption("These prompts are detailed and structured, leading to higher cognitive efficiency scores.")
 
-gp1 = "Explain the concept of quantum entanglement in detail, using a comprehensive analogy of two magic dice that are separated by a vast distance but still show the same numbers when rolled. Discuss the implications for information transfer and how this phenomenon challenges classical physics intuitions about locality and realism. Also touch upon the concept of 'spooky action at a distance' as described by Einstein."
-gp2 = "Describe the biological process of photosynthesis in plants, detailing the light-dependent reactions and the Calvin cycle. Explain how chlorophyll captures light energy to convert carbon dioxide and water into glucose and oxygen, and discuss the importance of this process for life on Earth and the global carbon cycle. Mention the role of ATP and NADPH as energy carriers during this transformation."
-gp3 = "Analyze the profound historical impact of the Gutenberg printing press on European society during the Renaissance. Discuss how it facilitated the spread of literacy, the standardization of languages, the dissemination of scientific knowledge, and the religious shifts associated with the Reformation, ultimately reshaping the cultural and intellectual landscape. Consider the long-term effects on democratization of information."
-gp4 = "Compare and contrast supervised and unsupervised machine learning paradigms. Explain the key differences in their training data requirements, with supervised learning using labeled datasets and unsupervised learning finding patterns in unlabeled data. Provide specific examples of algorithms and real-world applications for each approach, such as classification versus clustering. Discuss the trade-offs in terms of data preparation and model interpretability."
+gp1 = "Analyze the epistemological foundations of quantum entanglement by integrating formal mathematical structure, experimental validation, and philosophical interpretation into a coherent explanatory framework. Begin by describing how tensor product Hilbert spaces allow composite quantum systems to exhibit non-factorizable state vectors, and clarify why separability fails under entangled configurations. Then examine Bell’s inequalities, including the CHSH formulation, and explain how empirical violations observed in Aspect-type experiments undermine classical locality and deterministic realism. Extend the discussion toward decoherence theory, entropic correlations, and the role of measurement operators in collapsing superposed amplitudes. Contrast Copenhagen, Many-Worlds, and relational interpretations, focusing specifically on their ontological commitments and metaphysical implications. Additionally, evaluate how quantum information theory reframes entanglement as a computational resource enabling teleportation, superdense coding, and cryptographic security. Finally, synthesize these perspectives into a structured argument addressing whether entanglement necessitates nonlocal causation or instead demands a revision of classical intuitions regarding separability, causality, and physical realism."
+
+gp2 = "Construct a systems-level biochemical and thermodynamic analysis of photosynthesis that integrates molecular structure, energetic transfer mechanisms, and ecological macro-dynamics. Begin by formally describing chloroplast ultrastructure and pigment absorption spectra in terms of quantum excitation states. Then analyze the light-dependent reactions as an electron transport optimization problem, including photolysis, proton gradients, chemiosmotic coupling, and ATP synthase rotation mechanics. Extend the discussion into the Calvin-Benson cycle using carbon fixation kinetics, RuBisCO efficiency constraints, and NADPH reduction pathways. Evaluate photosynthesis as an entropy-management system that converts low-entropy solar radiation into high-order biochemical organization. Finally, synthesize its planetary-scale implications for atmospheric regulation, carbon sequestration feedback loops, and biospheric energy flow stability."
+
+gp3 = "Develop a multi-layered historical and epistemological examination of the Gutenberg printing press by integrating technological innovation theory, sociopolitical restructuring, and cognitive-cultural transformation. Begin by describing the mechanical engineering principles underlying movable type standardization and ink transfer reproducibility. Then analyze how mass replication altered information diffusion velocity and network topology across Renaissance Europe. Evaluate its causal role in accelerating scientific method formalization, destabilizing ecclesiastical epistemic monopolies, and enabling vernacular linguistic codification. Extend the analysis toward media ecology theory and distributed cognition, examining how print culture reshaped memory externalization and authority structures. Conclude by synthesizing how the printing press functioned as an epistemic amplifier that reconfigured knowledge production, institutional legitimacy, and political sovereignty."
+
+gp4 = "Produce a mathematically grounded and architecturally comparative analysis of supervised and unsupervised machine learning paradigms, emphasizing objective functions, representational geometry, and statistical inference principles. Begin by defining supervised learning as an empirical risk minimization framework over labeled distributions and contrast it with unsupervised latent-variable modeling and manifold estimation. Analyze bias-variance trade-offs, generalization bounds, and overfitting dynamics under distributional shift. Compare algorithmic mechanisms such as Support Vector Machines, ensemble-based decision forests, K-Means clustering, and Principal Component Analysis through the lens of optimization landscapes and feature-space transformations. Extend the discussion toward interpretability constraints, scalability limits, and robustness under adversarial perturbations. Finally, synthesize these paradigms into a structured framework evaluating when hybrid semi-supervised or self-supervised approaches become epistemically advantageous."
 
 #Layout: 2 Columns x 2 Rows for better readability
 c1, c2 = st.columns(2)
 
 with c1:
     st.markdown(f'<div class="prompt-box">{gp1}</div>', unsafe_allow_html=True)
-    if st.button("� Use: Quantum Physics", key="btn_gp1"):
+    if st.button("📝 Use: Quantum Foundations", key="btn_gp1"):
         set_prompt(gp1)
         st.rerun()
 
     st.markdown(f'<div class="prompt-box">{gp3}</div>', unsafe_allow_html=True)
-    if st.button("� Use: Printing Press", key="btn_gp3"):
+    if st.button("📝 Use: Printing Press Analysis", key="btn_gp3"):
         set_prompt(gp3)
         st.rerun()
 
 with c2:
     st.markdown(f'<div class="prompt-box">{gp2}</div>', unsafe_allow_html=True)
-    if st.button("📝 Use: Photosynthesis", key="btn_gp2"):
+    if st.button("📝 Use: Photosynthesis Systems", key="btn_gp2"):
         set_prompt(gp2)
         st.rerun()
 
     st.markdown(f'<div class="prompt-box">{gp4}</div>', unsafe_allow_html=True)
-    if st.button("📝 Use: ML Paradigms", key="btn_gp4"):
+    if st.button("📝 Use: ML Paradigm Theory", key="btn_gp4"):
         set_prompt(gp4)
         st.rerun()
 
 if st.session_state.auto_run:
-     # Force a rerun if auto_run was set by the button click callback 
-     # (Though we are calling rerun inside the if, the callback alternative is safer if we weren't doing direct logic checks? 
-     # actually simply calling set_prompt inside the if block works because we rerun immediately).
-     pass 
+    pass
 
 #Bad Examples
 st.markdown("### ⚠️ BAD EXAMPLES TO PROMPT (Low CE Score)")
-st.caption("These prompts are too short or vague, leading to lower cognitive efficiency scores.")
+st.caption("These prompts look normal but lack depth, structure, or analytical clarity.")
 
-bp1 = "What is AI?"
-bp2 = "Fix my code."
-bp3 = "Tell me a joke."
-bp4 = "Why is sky blue?"
+bp1 = "Explain artificial intelligence in simple terms."
+bp2 = "Describe how computers work."
+bp3 = "Give a summary of World War II."
+bp4 = "Explain why the sky is blue in a short answer."
 
 bc1, bc2, bc3, bc4 = st.columns(4)
 
 with bc1:
     st.markdown(f'<div class="prompt-box-bad">{bp1}</div>', unsafe_allow_html=True)
-    if st.button("Use: AI?", key="btn_bp1"):
+    if st.button("Use: AI Basic", key="btn_bp1"):
         set_prompt(bp1)
         st.rerun()
 
 with bc2:
     st.markdown(f'<div class="prompt-box-bad">{bp2}</div>', unsafe_allow_html=True)
-    if st.button("Use: Fix Code", key="btn_bp2"):
+    if st.button("Use: Computers", key="btn_bp2"):
         set_prompt(bp2)
         st.rerun()
 
 with bc3:
     st.markdown(f'<div class="prompt-box-bad">{bp3}</div>', unsafe_allow_html=True)
-    if st.button("Use: Joke", key="btn_bp3"):
+    if st.button("Use: WWII Summary", key="btn_bp3"):
         set_prompt(bp3)
         st.rerun()
 
 with bc4:
     st.markdown(f'<div class="prompt-box-bad">{bp4}</div>', unsafe_allow_html=True)
-    if st.button("Use: Sky", key="btn_bp4"):
+    if st.button("Use: Sky Simple", key="btn_bp4"):
         set_prompt(bp4)
         st.rerun()
 
@@ -248,7 +282,6 @@ prompt = st.text_area(
 
 run_btn = st.button("▶ Run Learning Session")
 
-
 #Run Pipeline
 if (run_btn or st.session_state.auto_run) and prompt.strip():
     
@@ -263,21 +296,45 @@ if (run_btn or st.session_state.auto_run) and prompt.strip():
         t0 = time.time()
         result = run_infer(prompt)
         runtime = time.time() - t0  # System Latency
-def extract_ceras_features(prompt_text, llm_result):
-    """
-    Temporary simulation of CEPM / CNN / ANFIS signals.
-    Replace this with real feature extraction + model inference later.
-    """
 
-    length = len(prompt_text)
-    complexity = min(len(prompt_text.split()) / 50, 1.0)
+def extract_ceras_features(prompt_text):
 
-    cepm_score = np.clip(0.4 + complexity * 0.4, 0, 1)
-    cnn_score = np.clip(0.5 + complexity * 0.3, 0, 1)
-    anfis_score = np.clip(0.45 + complexity * 0.35, 0, 1)
+    words = prompt_text.split()
+    prompt_length = np.clip(len(words), 1, 400)
+    character_count = len(prompt_text)
 
-    return cepm_score, cnn_score, anfis_score
+    sentence_count = max(len(re.findall(r"[.!?]", prompt_text)), 1)
 
+    unique_word_ratio = len(set(words)) / (prompt_length + 1e-6)
+    unique_word_ratio = np.clip(unique_word_ratio, 0, 1)
+
+    concept_density = sum(1 for w in words if len(w) > 6) / (prompt_length + 1e-6)
+    concept_density = np.clip(concept_density, 0, 1)
+
+    keystrokes = np.clip(character_count, 1, 2000)
+
+    prompt_quality = np.clip(prompt_length / 150, 0, 1)
+
+    #Simple live prompt_type mapping
+    if prompt_length < 20:
+        prompt_type = 0
+    elif prompt_length < 60:
+        prompt_type = 1
+    elif prompt_length < 120:
+        prompt_type = 2
+    else:
+        prompt_type = 3
+
+    return {
+        "prompt_length": float(prompt_length),
+        "sentence_count": float(sentence_count),
+        "unique_word_ratio": float(unique_word_ratio),
+        "concept_density": float(concept_density),
+        "prompt_quality": float(prompt_quality),
+        "character_count": float(character_count),
+        "keystrokes": float(keystrokes),
+        "prompt_type": float(prompt_type),
+    }
 
 #Run Pipeline
 should_run = False
@@ -301,27 +358,51 @@ if should_run and prompt.strip():
         st.session_state.current_runtime = runtime
         st.session_state.current_prompt = prompt
 
-        # Generate and store adaptive response
-        from llm_utils import generate_adaptive_response
-        cepm_score, cnn_score, anfis_score = extract_ceras_features(prompt, result)
-        
-        # We need the diagnostics for the adaptive response
-        # Re-calculating fusion here to get diagnostics for the adaptive response generation
-        # This duplicates the logic below but ensures we have the data for the LLM call
-        fusion_engine = CERASFusion()
-        fusion_df = fusion_engine.fuse(
-            student_ids=[1],
-            cepm_scores=[cepm_score],
-            cnn_scores=[cnn_score],
-            anfis_scores=[anfis_score]
-        )
-        diagnostics = fusion_df["diagnostics"].iloc[0]
-        fused_score = fusion_df["fused_ce_score"].iloc[0] # Needed for tone selection
-        
-        final_steps = result.get("final_answer", [])
-        
+    #Generate and store adaptive response
+    from llm_utils import generate_adaptive_response
+
+    #Extract Real Features
+    final_steps = result.get("final_answer", [])
+
+    features = extract_ceras_features(prompt)
+
+    #CEPM Inference
+    cepm_input = np.array([features[f] for f in cepm_features]).reshape(1, -1)
+    cepm_input_scaled = cepm_scaler.transform(cepm_input)
+    cepm_score = float(np.clip(cepm_model.predict(cepm_input_scaled)[0], 0, 1))
+
+    #CNN Inference
+    cnn_input = np.array([features[f] for f in cnn_features]).reshape(1, -1)
+    cnn_input = cnn_scaler.transform(cnn_input)
+
+    if len(cnn_model.input_shape) == 3:
+        cnn_input = cnn_input.reshape(cnn_input.shape[0], cnn_input.shape[1], 1)
+
+    cnn_score = float(np.clip(np.squeeze(cnn_model.predict(cnn_input, verbose=0)), 0, 1))
+
+    #Fusion
+    fusion_engine = CERASFusion()
+
+    fusion_df = fusion_engine.fuse(
+    session_ids=["session_1"],
+    cepm_scores=[cepm_score],
+    cnn_scores=[cnn_score])
+
+    fused_score = fusion_df["fused_ce_score"].iloc[0]
+    confidence = fusion_df["confidence"].iloc[0]
+
+    #Generate Adaptive Response
+    try:
         with st.spinner("Generating personalized learning summary..."):
-             st.session_state.adaptive_res = generate_adaptive_response(prompt, final_steps, fused_score, diagnostics)
+            st.session_state.adaptive_res = generate_adaptive_response(
+                prompt,
+                final_steps,
+                fused_score,
+                confidence
+        )
+    except Exception as e:
+        st.warning("Adaptive response unavailable (LLM rate limit reached).")
+        st.session_state.adaptive_res = None
 
 #Render Results if available
 if "current_result" in st.session_state and st.session_state.current_result is not None:
@@ -363,15 +444,28 @@ if "current_result" in st.session_state and st.session_state.current_result is n
     st.markdown("Cognitive Efficiency Analysis")
     
     # Extract simulated signals (Using result_prompt)
-    cepm_score, cnn_score, anfis_score = extract_ceras_features(result_prompt, result)
+    features = extract_ceras_features(result_prompt)
+
+    #CEPM
+    cepm_input = np.array([features[f] for f in cepm_features]).reshape(1, -1)
+    cepm_input_scaled = cepm_scaler.transform(cepm_input)
+    cepm_score = float(np.clip(cepm_model.predict(cepm_input_scaled)[0], 0, 1))
+
+    #CNN
+    cnn_input = np.array([features[f] for f in cnn_features]).reshape(1, -1)
+    cnn_input = cnn_scaler.transform(cnn_input)
+
+    if len(cnn_model.input_shape) == 3:
+        cnn_input = cnn_input.reshape(cnn_input.shape[0], cnn_input.shape[1], 1)
+
+    cnn_score = float(np.clip(np.squeeze(cnn_model.predict(cnn_input, verbose=0)), 0, 1))
 
     fusion_engine = CERASFusion()
 
     fusion_df = fusion_engine.fuse(
-        student_ids=[1],
+        session_ids=["session_1"],
         cepm_scores=[cepm_score],
-        cnn_scores=[cnn_score],
-        anfis_scores=[anfis_score]
+        cnn_scores=[cnn_score]
     )
 
     fused_score = fusion_df["fused_ce_score"].iloc[0]
@@ -391,22 +485,17 @@ if "current_result" in st.session_state and st.session_state.current_result is n
     st.markdown("### Live Cognitive Signals")
     
     #Create a visual dashboard for the signals
-    sig_col1, sig_col2, sig_col3 = st.columns(3)
+    sig_col1, sig_col2 = st.columns(2)
     
     with sig_col1:
-        st.markdown("**CEPM (Behavioral)**")
+        st.markdown("**CEPM**")
         st.progress(float(cepm_score), text=f"Load: {cepm_score:.2f}")
-        st.caption("Derived from interaction cadence")
+        st.caption("Derived from knowledge")
         
     with sig_col2:
-        st.markdown("**CNN (Visual)**")
+        st.markdown("**CNN (Behavioural)**")
         st.progress(float(cnn_score), text=f"Focus: {cnn_score:.2f}")
-        st.caption("Facial attention estimation")
-        
-    with sig_col3:
-        st.markdown("**ANFIS (Neuro-Fuzzy)**")
-        st.progress(float(anfis_score), text=f"State: {anfis_score:.2f}")
-        st.caption("Non-linear state mapping")
+        st.caption("Derived from interaction cadence")
     
     st.markdown("---")
     
@@ -437,8 +526,7 @@ if "current_result" in st.session_state and st.session_state.current_result is n
             It combines three independent signals:
 
             • **Conceptual Strength (CEPM)** – Depth of understanding  
-            • **Behavioral Engagement (CNN)** – Effort and consistency  
-            • **Reasoning Alignment (ANFIS)** – Strategy quality  
+            • **Behavioral & Reasoning Alignment (CNN)** – Interaction patterns, engagement consistency, and structural reasoning signals 
 
             These are fused into a single score between **0 and 1**.
 
@@ -456,59 +544,72 @@ if "current_result" in st.session_state and st.session_state.current_result is n
             **0.75 – 1.00 → Peak Learning State**  
             You are operating with strong clarity, alignment, and efficiency. Ready for advanced challenges.
 
-
             This score reflects learning efficiency — not intelligence — and adapts to your behavior in real time.
             """)
-
 
     #Diagnostic Report
     with st.expander("Cognitive Diagnostic Report"):
 
-        insights = []
+        if fused_score < 0.40:
+            st.markdown("""
+            ### High Cognitive Load
 
-        if diagnostics["concept_gap"]:
-            insights.append(
-                "### Conceptual Weakness\n"
-                "Your response indicates gaps in core understanding of this topic.\n\n"
-                "**What this means:** You may be applying procedures without fully grasping the underlying principles.\n\n"
-                "**Recommended action:** Revisit foundational theory and solve basic concept-check questions before moving to advanced problems."
-            )
+            Your overall cognitive efficiency is currently low.
 
-        if diagnostics["effort_gap"]:
-            insights.append(
-                "### Low Structured Engagement\n"
-                "Your interaction suggests limited step-by-step problem-solving effort.\n\n"
-                "**What this means:** Responses may be brief or surface-level instead of logically structured.\n\n"
-                "**Recommended action:** Practice writing complete reasoning steps and avoid skipping intermediate logic."
-            )
+            **What this means:**  
+            You may be struggling with core concepts, reasoning structure, or engagement consistency.
 
-        if diagnostics["strategy_gap"]:
-            insights.append(
-                "### Reasoning Structure Instability\n"
-                "Your reasoning pattern lacks consistent logical flow.\n\n"
-                "**What this means:** Even if the final answer is correct, the pathway may be inefficient or unclear.\n\n"
-                "**Recommended action:** Use structured frameworks (Step 1 → Step 2 → Conclusion) when solving problems."
-            )
+            **Recommended action:**  
+            • Revisit foundational concepts  
+            • Slow down your reasoning steps  
+            • Avoid jumping directly to conclusions  
+            • Practice structured problem solving  
+            """)
 
-        if diagnostics["high_disagreement"]:
-            insights.append(
-                "### Performance Inconsistency\n"
-                "Cognitive strength and behavioral signals are not aligned.\n\n"
-                "**What this means:** You may understand the material but are not consistently applying structured effort.\n\n"
-                "**Recommended action:** Focus on consistency — apply the same structured reasoning approach across similar tasks."
-            )
+        elif fused_score < 0.60:
+            st.markdown("""
+            ### Developing Understanding
 
-        if not insights:
-            insights.append(
-                "### Stable Cognitive State\n"
-                "Your conceptual understanding, reasoning structure, and engagement are aligned.\n\n"
-                "**What this means:** You are processing information efficiently and consistently.\n\n"
-                "**Next step:** Challenge yourself with higher-difficulty or multi-stage problems."
-            )
+            You are making progress, but inconsistencies are present.
 
-        for msg in insights:
-            st.markdown(msg)
-            st.markdown("---")
+            **What this means:**  
+            Your conceptual understanding and reasoning structure are partially aligned.
+
+            **Recommended action:**  
+            • Strengthen logical flow  
+            • Write clearer intermediate steps  
+            • Reduce reasoning shortcuts  
+            """)
+
+        elif fused_score < 0.75:
+            st.markdown("""
+            ### Stable Cognitive Processing
+
+            Your reasoning and engagement are well aligned.
+
+            **What this means:**  
+            You are learning efficiently with minor areas for refinement.
+
+            **Recommended action:**  
+            • Challenge yourself with harder problems  
+            • Maintain structured reasoning  
+            • Improve depth of explanations  
+            """)
+
+        else:
+            st.markdown("""
+            ### Peak Cognitive Efficiency
+
+            Your conceptual clarity, behavioral engagement, and reasoning alignment are strongly synchronized.
+
+            **What this means:**  
+            You are operating in a high-efficiency learning state.
+
+            **Recommended action:**  
+            • Attempt advanced multi-step problems  
+            • Explore edge cases  
+            • Try teaching the concept back  
+            """)
 
     #Improvement Suggestions
     with st.expander("Improvement Suggestions"):
@@ -616,7 +717,6 @@ if "current_result" in st.session_state and st.session_state.current_result is n
         file_name="ceras_session.json",
         mime="application/json",
     )
-
 
 #Empty State
 if not run_btn:

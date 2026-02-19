@@ -1,28 +1,43 @@
 import numpy as np
-import os
-import tempfile
 
 #Model Monitor Test
 def test_ceras_monitor_basic():
     from postprocess.model_monitor import CERASMonitor
 
     monitor = CERASMonitor(
+        cepm_mean_ref=0.6,
+        cepm_std_ref=0.1,
         cnn_mean_ref=0.6,
         cnn_std_ref=0.1,
-        calib_error_ref=0.05,
         readiness_mean_ref=0.65,
         at_risk_ratio_ref=0.2,
         tolerance=0.2
     )
 
     report = monitor.monitor(
+        cepm_scores=np.array([0.55, 0.6, 0.7]),
         cnn_scores=np.array([0.55, 0.6, 0.7]),
-        calib_error_current=0.04,
         readiness_scores=np.array([0.5, 0.6, 0.8]),
         readiness_labels=["Needs Support", "Ready", "Highly Ready"]
     )
 
     assert isinstance(report, dict)
+
+    expected_keys = {
+        "cepm_mean_current",
+        "cepm_std_current",
+        "cnn_mean_current",
+        "cnn_std_current",
+        "cepm_drift",
+        "cnn_drift",
+        "readiness_mean_current",
+        "at_risk_ratio_current",
+        "readiness_drift"
+    }
+
+    for k in expected_keys:
+        assert k in report
+        assert report[k] is not None
 
 #Alerts Test
 def test_alert_generation():
@@ -54,11 +69,9 @@ def test_monitoring_report_generation():
 
     monitor_report = {
         "cnn_drift": False,
-        "calibration_drift": False,
         "readiness_drift": False,
         "cnn_mean_current": 0.6,
         "cnn_std_current": 0.1,
-        "calibration_error_current": 0.04,
         "readiness_mean_current": 0.65,
         "at_risk_ratio_current": 0.2
     }

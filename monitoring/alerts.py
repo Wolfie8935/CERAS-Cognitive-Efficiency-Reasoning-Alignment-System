@@ -10,11 +10,6 @@ class CERASAlerts:
         ----------
         monitor_report : dict
             Output from CERASMonitor.monitor()
-
-        Returns
-        -------
-        alerts : list of dict
-            List of active alerts
         """
 
         alerts = []
@@ -28,9 +23,9 @@ class CERASAlerts:
 
         if monitor_report.get("calibration_drift"):
             alerts.append({
-                "type": "CALIBARATION_DRIFT",
+                "type": "CALIBRATION_DRIFT",
                 "severity": "Critical",
-                "message": "Calibration error has degraded. MOdel confidence may be unreliable."
+                "message": "Calibration error has degraded. Model confidence may be unreliable."
             })
 
         if monitor_report.get("readiness_drift"):
