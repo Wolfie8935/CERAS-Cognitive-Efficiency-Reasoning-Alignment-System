@@ -18,52 +18,70 @@
 The core of CERAS is a **System 2 Reasoning Engine** that separates *planning* (decomposition) from *execution* (solving) and *verification*.
 
 ```mermaid
----
-config:
-  layout: elk
-  theme: redux
-  look: neo
----
-flowchart TB
- subgraph subGraph0["Offline Processing"]
-        Data["Raw Data: PISA, OULAD, MEU, Reveal"]
-        Preprocess["Data Processing & Fusion"]
-        Features["Feature Engineering"]
-        CEPM["Cognitive Efficiency Model - CEPM"]
-        Explain["Explainability & Intent Modeling - CNN + ANFIS"]
-  end
- subgraph subGraph1["Online Reasoning"]
-        UI["App UI"]
-        Orchestrator["Reasoning Engine with Verifiers + GROQ API"]
-        ToT["Customized Tree-of-Thought Reasoning"]
-        LLM["LLM-based Strategy & Verification via LLM Council"]
-  end
-    User["Student"] -- Query --> UI
-    Data --> Preprocess
-    Preprocess --> Features
-    Features --> CEPM & Explain
-    UI --> Orchestrator
-    Orchestrator --> ToT & LLM
-    CEPM -- CE Score --> Adaptive["Adaptive Response Engine"]
-    Explain -- CE Score Analyzer --> Adaptive
-    ToT -- STEP Breakdown --> Adaptive
-    Adaptive -- Personalized Feedback --> UI
+graph TD
 
-     Data:::offline
-     Preprocess:::offline
-     Features:::offline
-     CEPM:::offline
-     Explain:::offline
-     UI:::online
-     Orchestrator:::online
-     ToT:::online
-     LLM:::online
-     User:::ui
-     Adaptive:::adaptive
-    classDef offline fill:#E3F2FD,stroke:#1E88E5,stroke-width:1.5px,color:#0D47A1
-    classDef online fill:#E8F5E9,stroke:#43A047,stroke-width:1.5px,color:#1B5E20
-    classDef adaptive fill:#F3E5F5,stroke:#8E24AA,stroke-width:1.5px,color:#4A148C
-    classDef ui fill:#FFF3E0,stroke:#FB8C00,stroke-width:1.5px,color:#E65100
+%% =========================
+%% OFFLINE PROCESSING PANEL
+%% =========================
+subgraph Offline_Processing
+    direction TB
+    Raw[Raw Data Sources]
+    Process[Data Processing and Fusion]
+    Feature[Feature Engineering]
+    CEPM[Cognitive Efficiency Model CEPM]
+    CNN[Explainability and Intent Modeling CNN]
+
+    Raw --> Process
+    Process --> Feature
+    Feature --> CEPM
+    Feature --> CNN
+end
+
+%% =========================
+%% ADAPTIVE ENGINE
+%% =========================
+Adaptive[Adaptive Response Engine]
+
+CEPM -->|CE Score| Adaptive
+CNN -->|Intent Analysis| Adaptive
+
+%% =========================
+%% STUDENT INTERACTION
+%% =========================
+Student[Student]
+Student -->|Query| UI[Streamlit App Interface]
+
+%% =========================
+%% ONLINE REASONING PANEL
+%% =========================
+subgraph Online_Reasoning
+    direction TB
+    UI
+    Reasoning[Reasoning Engine with Verifiers]
+    ToT[Tree of Thoughts Reasoning]
+    LLM[LLM Strategy and Verification]
+
+    UI --> Reasoning
+    Reasoning --> ToT
+    Reasoning --> LLM
+end
+
+ToT -->|Step Breakdown| Adaptive
+Adaptive -->|Personalized Feedback| UI
+
+%% =========================
+%% STYLING
+%% =========================
+
+classDef offline fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#0D47A1;
+classDef online fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#1B5E20;
+classDef adaptive fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#4A148C;
+classDef student fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#E65100;
+
+class Raw,Process,Feature,CEPM,CNN offline;
+class UI,Reasoning,ToT,LLM online;
+class Adaptive adaptive;
+class Student student;
 ```
 
 ---
