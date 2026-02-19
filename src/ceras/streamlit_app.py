@@ -1,4 +1,5 @@
 import streamlit as st
+import base64
 import time
 import json
 from datetime import datetime
@@ -21,6 +22,10 @@ st.set_page_config(
 )
 
 artifact_dir = "./artifacts"
+
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
 
 #Load trained model
 @st.cache_resource
@@ -133,6 +138,8 @@ if "groq_status" not in st.session_state:
     st.session_state.groq_status = "Waiting"
 if "gemini_status" not in st.session_state:
     st.session_state.gemini_status = "Waiting"
+if "openai_status" not in st.session_state:
+    st.session_state.openai_status = "Waiting"
 
 def perform_check(provider):
     key_key = f"input_{provider.lower()}_key"
@@ -152,39 +159,24 @@ def check_groq():
 def check_gemini():
     perform_check("Gemini")
 
+def check_openai():
+    perform_check("OpenAI")
+
 #Sidebar
 with st.sidebar:
 
     if logo_path.exists():
-        st.markdown(
-            """
-            <div style="display:flex;
-                        flex-direction:column;
-                        align-items:center;
-                        text-align:center;
-                        padding-top:30px;
-                        padding-bottom:25px;">
-            """,
-            unsafe_allow_html=True
-        )
-
+        logo_base64 = get_base64_image(logo_path)
         st.markdown(
             f"""
-            <img src="assets/ceras_logo.png"
-                 width="260"
-                 class="logo-glow" />
-            """,
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            """
-                <h2 style="margin-top:15px;">CERAS</h2>
-                <p style="color:#94a3b8; font-size:14px;">
-                    Cognitive Efficiency & Reasoning Alignment System
-                </p>
-            </div>
-            """,
+<div style="display:flex; flex-direction:column; align-items:center; text-align:center; padding-top:30px; padding-bottom:25px;">
+    <img src="data:image/png;base64,{logo_base64}" width="260" class="logo-glow" />
+    <h2 style="margin-top:15px;">CERAS</h2>
+    <p style="color:#94a3b8; font-size:14px;">
+        Cognitive Efficiency & Reasoning Alignment System
+    </p>
+</div>
+""",
             unsafe_allow_html=True
         )
 
@@ -193,6 +185,7 @@ with st.sidebar:
     with st.expander("API Keys", expanded=True):
         st.session_state.groq_api_key = st.text_input("Groq API Key", type="password", key="input_groq_key", on_change=check_groq)
         st.session_state.gemini_api_key = st.text_input("Gemini API Key", type="password", key="input_gemini_key", on_change=check_gemini)
+        st.session_state.openai_api_key = st.text_input("OpenAI API Key", type="password", key="input_openai_key", on_change=check_openai)
 
     st.markdown("### 🤖 Model Selection")
     
@@ -219,27 +212,46 @@ with st.sidebar:
         "gemini-robotics-er-1.5-preview"
     ]
     
+    openai_models = [
+        "gpt-5.2",
+        "gpt-5-mini", 
+        "gpt-5-nano",
+        "gpt-5.2-pro",
+        "gpt-5",
+        "gpt-4.1",
+        "gpt-4o",
+        "gpt-4-turbo",
+        "gpt-4",
+        "gpt-3.5-turbo",
+        "gpt-oss-120b",
+        "gpt-oss-20b"
+    ]
+    
     # Main Reasoner
     c1, c2 = st.columns([0.4, 0.6])
     with c1:
-        st.session_state.main_provider = st.radio("Main Provider", ["Groq", "Gemini"], index=0, key="radio_main_provider", horizontal=False, label_visibility="collapsed")
+        st.session_state.main_provider = st.radio("Main Provider", ["Groq", "Gemini", "OpenAI"], index=0, key="radio_main_provider", horizontal=False, label_visibility="collapsed")
     with c2:
         if st.session_state.main_provider == "Groq":
             st.session_state.main_model = st.selectbox("Model", groq_models, index=0, key="select_main_model", label_visibility="collapsed")
-        else:
+        elif st.session_state.main_provider == "Gemini":
             st.session_state.main_model = st.selectbox("Model", gemini_models, index=0, key="select_main_model", label_visibility="collapsed")
+        else:
+            st.session_state.main_model = st.selectbox("Model", openai_models, index=0, key="select_main_model_openai", label_visibility="collapsed")
 
     # Verifier
     st.caption("Verifier Model")
     v1, v2 = st.columns([0.4, 0.6])
     with v1:
-        st.session_state.verifier_provider = st.radio("Verifier Provider", ["Groq", "Gemini"], index=0, key="radio_verifier_provider", horizontal=False, label_visibility="collapsed")
+        st.session_state.verifier_provider = st.radio("Verifier Provider", ["Groq", "Gemini", "OpenAI"], index=0, key="radio_verifier_provider", horizontal=False, label_visibility="collapsed")
     with v2:
         if st.session_state.verifier_provider == "Groq":
              # Default verifier to faster model
             st.session_state.verifier_model = st.selectbox("Verifier", groq_models, index=1, key="select_verifier_model", label_visibility="collapsed")
-        else:
+        elif st.session_state.verifier_provider == "Gemini":
             st.session_state.verifier_model = st.selectbox("Verifier", gemini_models, index=0, key="select_verifier_model", label_visibility="collapsed")
+        else:
+            st.session_state.verifier_model = st.selectbox("Verifier", openai_models, index=3, key="select_verifier_model_openai", label_visibility="collapsed")
 
 
     st.markdown("### ⚙️ System Status")
@@ -250,19 +262,26 @@ with st.sidebar:
     gem_status = st.session_state.gemini_status
     gem_color = "#4ade80" if gem_status == "Connected" else ("#ef4444" if gem_status == "Not Connected" else "#94a3b8")
 
+    openai_status = st.session_state.openai_status
+    openai_color = "#4ade80" if openai_status == "Connected" else ("#ef4444" if openai_status == "Not Connected" else "#94a3b8")
+
     st.markdown(
         f"""
         <div class="sidebar-box">
             <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                <span>🔌 <b>Groq API</b></span>
+                <span> <b>Groq API</b></span>
                 <span style="color:{g_color};">● {g_status}</span>
             </div>
             <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                <span>✨ <b>Gemini API</b></span>
+                <span> <b>Gemini API</b></span>
                 <span style="color:{gem_color};">● {gem_status}</span>
             </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                <span> <b> OpenAI API</b></span>
+                <span style="color:{openai_color};">● {openai_status}</span>
+            </div>
             <div style="display:flex; justify-content:space-between;">
-                <span>📡 <b>Telemetry</b></span>
+                <span> <b>Telemetry</b></span>
                 <span style="color:#60a5fa;">● Tracking</span>
             </div>
         </div>
@@ -275,10 +294,10 @@ with st.sidebar:
     st.markdown(
         """
         <div class="sidebar-box" style="font-size: 13px;">
-            <p style="margin:8px 0;"> 🧩 <b>ToT-LLM</b><br><span style="color:#94a3b8;">Tree-of-Thoughts Reasoning Engine</span></p>
-            <p style="margin:8px 0;"> 🧠 <b>CEPM</b><br><span style="color:#94a3b8;">Cognitive Engagement Modeling</span></p>
-            <p style="margin:8px 0;"> 👁️ <b>CNN-Vis</b><br><span style="color:#94a3b8;">Behavioral Signal Analysis</span></p>
-            <p style="margin:8px 0;"> 🔗 <b>Fusion Layer</b><br><span style="color:#94a3b8;">Multi-Modal Signal Integration</span></p>
+            <p style="margin:8px 0;">  <b>ToT-LLM</b><br><span style="color:#94a3b8;">Tree-of-Thoughts Reasoning Engine</span></p>
+            <p style="margin:8px 0;">  <b>CEPM</b><br><span style="color:#94a3b8;">Cognitive Engagement Modeling</span></p>
+            <p style="margin:8px 0;">  <b>CNN-Vis</b><br><span style="color:#94a3b8;">Behavioral Signal Analysis</span></p>
+            <p style="margin:8px 0;">  <b>Fusion Layer</b><br><span style="color:#94a3b8;">Multi-Modal Signal Integration</span></p>
         </div>
         """,
         unsafe_allow_html=True
@@ -307,37 +326,8 @@ def set_prompt(text):
 #Header
 if logo_path.exists():
 
-    st.markdown(
-        f"""
-        <div style="display:flex;
-                    flex-direction:column;
-                    align-items:center;
-                    justify-content:center;
-                    text-align:center;
-                    margin-top:80px;
-                    margin-bottom:40px;">
-
-            <img src="assets/ceras_logo.png"
-                 width="300"
-                 class="logo-glow"
-                 style="margin-bottom:30px;" />
-
-            <h1 style="font-size:52px;
-                       letter-spacing:3px;
-                       margin-bottom:10px;">
-                CERAS
-            </h1>
-
-            <h3 style="color:#94a3b8;
-                       font-weight:400;
-                       font-size:22px;">
-                Cognitive Efficiency Reasoning Alignment System
-            </h3>
-
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.title(":rainbow[CERAS]")
+    st.markdown("### Cognitive Efficiency Reasoning Alignment System")
 
 st.markdown("""
 <div style="text-align: justify;">
@@ -500,6 +490,7 @@ if (run_btn or st.session_state.auto_run) and prompt.strip():
             "verifier_provider": st.session_state.get("verifier_provider", "Groq"),
             "groq_api_key": st.session_state.get("groq_api_key", ""),
             "gemini_api_key": st.session_state.get("gemini_api_key", ""),
+            "openai_api_key": st.session_state.get("openai_api_key", ""),
             "main_model": st.session_state.get("main_model"),
             "verifier_model": st.session_state.get("verifier_model"),
         }
@@ -559,6 +550,7 @@ api_config = {
     "verifier_provider": st.session_state.get("verifier_provider", "Groq"),
     "groq_api_key": st.session_state.get("groq_api_key", ""),
     "gemini_api_key": st.session_state.get("gemini_api_key", ""),
+    "openai_api_key": st.session_state.get("openai_api_key", ""),
     "main_model": st.session_state.get("main_model"),
     "verifier_model": st.session_state.get("verifier_model"),
 }

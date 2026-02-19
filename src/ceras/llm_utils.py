@@ -2,6 +2,13 @@ import json
 import re
 from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
+try:
+    from langchain_openai import ChatOpenAI
+except ImportError:
+    try:
+        from langchain_community.chat_models import ChatOpenAI
+    except ImportError:
+        ChatOpenAI = None
 from dotenv import load_dotenv
 import os
 
@@ -184,6 +191,8 @@ def get_llm_instance(model_name: str, api_config: dict = None):
             api_key = api_config.get("groq_api_key")
         elif provider == "Gemini":
             api_key = api_config.get("gemini_api_key")
+        elif provider == "OpenAI":
+            api_key = api_config.get("openai_api_key")
     
     # Fallback to env if specific key not provided
     if not api_key:
@@ -191,6 +200,8 @@ def get_llm_instance(model_name: str, api_config: dict = None):
             api_key = os.environ.get("GROQ_API_KEY")
         elif provider == "Gemini":
             api_key = os.environ.get("GOOGLE_API_KEY")
+        elif provider == "OpenAI":
+            api_key = os.environ.get("OPENAI_API_KEY")
 
     if provider == "Gemini":
         if not api_key:
@@ -199,6 +210,12 @@ def get_llm_instance(model_name: str, api_config: dict = None):
         
         # Use gemini-2.5-flash as requested
         return ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=api_key)
+    elif provider == "OpenAI":
+        if not api_key:
+             api_key = os.environ.get("OPENAI_API_KEY")
+        if not ChatOpenAI:
+             raise ImportError("LangChain OpenAI integration not found. Please install `langchain-openai` or `langchain`.")
+        return ChatOpenAI(model=model_name, api_key=api_key)
     else:
         # Groq
         if not api_key:
@@ -293,7 +310,8 @@ def check_connection(provider: str, api_key: str, model_name: str = None) -> boo
         config = {
             "main_provider": provider,
             "groq_api_key": api_key if provider == "Groq" else None,
-            "gemini_api_key": api_key if provider == "Gemini" else None
+            "gemini_api_key": api_key if provider == "Gemini" else None,
+            "openai_api_key": api_key if provider == "OpenAI" else None
         }
         
         # Use a lightweight/common model for check if not specified
@@ -302,6 +320,8 @@ def check_connection(provider: str, api_key: str, model_name: str = None) -> boo
                 model_name = "llama-3.1-8b-instant"
             elif provider == "Gemini":
                 model_name = "gemini-2.5-flash"
+            elif provider == "OpenAI":
+                model_name = "gpt-3.5-turbo"
 
         llm = get_llm_instance(model_name, api_config=config)
         # Simple invocation
