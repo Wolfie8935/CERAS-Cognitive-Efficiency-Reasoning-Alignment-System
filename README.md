@@ -145,101 +145,101 @@ A modern Streamlit UI providing:
 ## 📂 Project Structure
 
 ```text
-├── 📁 artifacts
-│   ├── 📄 anfis_features.npy
-│   ├── 📄 anfis_model.pkl
-│   ├── 📄 cepm_features.npy
-│   ├── 📄 cepm_lightgbm.pkl
-│   ├── 📄 cepm_scaler.pkl
-│   ├── 📄 cnn_ce_model.keras
-│   └── 📄 cnn_features.npy
-├── 📁 data
-│   ├── 📝 README.md
-│   ├── 📄 data_clean_and_explore.ipynb
-│   ├── 📄 download_data.ipynb
-│   └── 📄 pisa_data.ipynb
-├── 📁 docs
-│   ├── 📝 archi.md
-│   ├── 🖼️ image.png
-│   └── 📝 literature_survey.md
-├── 📁 experiments
-│   └── 🐍 run_experiment.py
-├── 📁 features
-│   ├── 🐍 feature_quality.py
-│   └── 🐍 featurize.py
-├── 📁 graphs
-│   ├── 📄 intention_cluster_means.csv
-│   ├── 🖼️ intention_cluster_means.png
-│   ├── 🖼️ shap_bar.png
-│   └── 🖼️ shap_summary.png
-├── 📁 models
-│   ├── 🐍 anfis.py
-│   ├── 🐍 cepm.py
-│   └── 🐍 cnn.py
-├── 📁 monitoring
-│   ├── 🐍 alerts.py
-│   └── 🐍 reports.py
-├── 📁 notebooks
-│   ├── 📄 01_data_explore.ipynb
-│   └── 📄 02_baseline_model.ipynb
-├── 📁 outputs
-│   └── ⚙️ .gitkeep
-├── 📁 postprocess
-│   ├── 🐍 calibrator.py
-│   └── 🐍 model_monitor.py
-├── 📁 postprocess_store
-│   └── 📄 ce_calibrator.joblib
-├── 📁 preprocess
-│   ├── 🐍 auditor.py
-│   ├── 🐍 ce_builder.py
-│   ├── 🐍 cog_student.py
-│   ├── 🐍 questionnaire_student.py
-│   └── 🐍 signal_fusion.py
-├── 📁 src
-│   ├── 📁 ceras
-│   │   ├── 🐍 CAMRE_EDU.py
-│   │   ├── 🐍 __init__.py
-│   │   ├── 📄 edu_module_tests.ipynb
-│   │   ├── 📄 experiments.ipynb
-│   │   ├── 🐍 fusion.py
-│   │   ├── 🐍 inference.py
-│   │   ├── 🐍 llm_utils.py
-│   │   ├── 🐍 main.py
-│   │   ├── 🐍 pipeline_1.py
-│   │   ├── 📝 project.md
-│   │   ├── 🐍 streamlit_app.py
-│   │   ├── 📄 testing.ipynb
-│   │   ├── 🐍 tree_of_thoughts.py
-│   │   ├── ⚙️ tree_of_thoughts_example.json
-│   │   └── ⚙️ tree_of_thoughts_simple.json
-│   └── 📁 ceras.egg-info
-│       ├── 📄 PKG-INFO
-│       ├── 📄 SOURCES.txt
-│       ├── 📄 dependency_links.txt
-│       └── 📄 top_level.txt
-├── 📁 tests
-│   ├── 🐍 test_features.py
-│   ├── 🐍 test_monitoring.py
-│   ├── 🐍 test_postprocess.py
-│   └── 🐍 test_preprocess.py
-├── ⚙️ .gitignore
-├── 📄 LICENSE
-├── 📝 README.md
-├── 🐍 check_conn_simple.py
-├── 🐍 data_loader.py
-├── 🐍 data_loader_pisa.py
-├── 🐍 debug_decomposition.py
-├── ⚙️ environment.yml
-├── 📝 final_architecture.md
-├── ⚙️ pyproject.toml
-├── ⚙️ pytest.ini
-├── 📄 requirements.txt
-├── 🐍 run_calibrator.py
-├── 🐍 run_preprocess.py
-├── 🐍 test_model_names.py
-├── ⚙️ tree_of_thoughts_example.json
-├── 🖼️ tree_of_thoughts_substantive.png
-└── 🐍 verify_groq_connection.py
+.
+├── LICENSE
+├── README.md
+├── __pycache__
+│   └── data_loader.cpython-312.pyc
+├── artifacts
+│   ├── cepm_features.npy
+│   ├── cepm_lightgbm.pkl
+│   ├── cepm_scaler.pkl
+│   ├── cnn_ce_model.keras
+│   ├── cnn_features.npy
+│   └── cnn_scaler.pkl
+├── check_conn_simple.py
+├── data
+│   ├── README.md
+│   ├── pisa_data.ipynb
+│   └── raw
+│       └── synthetic_prompt.parquet
+├── debug_decomposition.py
+├── docs
+│   ├── archi.md
+│   ├── image.png
+│   └── literature_survey.md
+├── environment.yml
+├── experiments
+│   └── run_experiment.py
+├── final_architecture.md
+├── graphs
+│   ├── intention_cluster_means.csv
+│   ├── intention_cluster_means.png
+│   └── shap_summary.png
+├── models
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   └── anfis.cpython-312.pyc
+│   ├── cepm.py
+│   └── cnn.py
+├── monitoring
+│   ├── __pycache__
+│   │   ├── alerts.cpython-312.pyc
+│   │   └── reports.cpython-312.pyc
+│   ├── alerts.py
+│   └── reports.py
+├── notebooks
+│   ├── 01_data_explore.ipynb
+│   └── 02_baseline_model.ipynb
+├── outputs
+├── pipeline_debug.log
+├── postprocess
+│   ├── __pycache__
+│   │   ├── calibrator.cpython-312.pyc
+│   │   ├── insights.cpython-312.pyc
+│   │   └── model_monitor.cpython-312.pyc
+│   └── model_monitor.py
+├── pyproject.toml
+├── pytest.ini
+├── requirements-render.txt
+├── requirements.txt
+├── src
+│   ├── ceras
+│   │   ├── CAMRE_EDU.py
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   ├── edu_module_tests.ipynb
+│   │   ├── experiments.ipynb
+│   │   ├── fusion.py
+│   │   ├── inference.py
+│   │   ├── llm_utils.py
+│   │   ├── main.py
+│   │   ├── pipeline_1.py
+│   │   ├── project.md
+│   │   ├── streamlit_app.py
+│   │   ├── testing.ipynb
+│   │   ├── tree_of_thoughts.py
+│   │   ├── tree_of_thoughts_example.json
+│   │   └── tree_of_thoughts_simple.json
+│   └── ceras.egg-info
+│       ├── PKG-INFO
+│       ├── SOURCES.txt
+│       ├── dependency_links.txt
+│       └── top_level.txt
+├── test_model_names.py
+├── tests
+│   ├── __pycache__
+│   │   ├── test_features.cpython-312-pytest-8.4.2.pyc
+│   │   ├── test_features.cpython-312.pyc
+│   │   ├── test_monitoring.cpython-312-pytest-8.4.2.pyc
+│   │   ├── test_postprocess.cpython-312-pytest-8.4.2.pyc
+│   │   └── test_preprocess.cpython-312-pytest-8.4.2.pyc
+│   ├── test_monitoring.py
+│   └── test_postprocess.py
+├── tree_of_thoughts_example.json
+├── tree_of_thoughts_substantive.png
+└── verify_groq_connection.py
 ```
 
 ---
