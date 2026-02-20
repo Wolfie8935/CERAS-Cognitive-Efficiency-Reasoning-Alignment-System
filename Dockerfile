@@ -1,17 +1,18 @@
-FROM python:3.10.13-slim
+FROM python:3.12.12-slim
 
 WORKDIR /app
 
-# Install required system libraries
+# Install system dependency for LightGBM
 RUN apt-get update && apt-get install -y \
     build-essential \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY . /app
-
+COPY requirements-render.txt .
 RUN pip install --upgrade pip
-RUN pip install -r requirements-render.txt
+RUN pip install --no-cache-dir -r requirements-render.txt
+
+COPY . .
 
 EXPOSE 10000
 
