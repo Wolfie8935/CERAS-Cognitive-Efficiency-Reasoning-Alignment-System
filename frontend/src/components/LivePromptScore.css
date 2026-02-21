@@ -1,0 +1,294 @@
+/* ========================================
+   LivePromptScore — Real-time prompt quality panel
+   ======================================== */
+
+.live-score-panel {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 28px 32px;
+    background: var(--t2-bg);
+    border: 1px solid var(--t2-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--t2-shadow);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.4s ease both;
+}
+
+.live-score-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #a78bfa, #f472b6, #3b82f6);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+.live-score-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.live-score-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #22c55e;
+    animation: pulse 2s infinite;
+}
+
+.prompt-type-badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.prompt-type-badge.short {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.prompt-type-badge.medium {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.prompt-type-badge.detailed {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.prompt-type-badge.comprehensive {
+    background: rgba(34, 197, 94, 0.15);
+    color: #86efac;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* Main score area — gauge + features */
+.live-score-body {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Radial Gauge */
+.gauge-container {
+    flex-shrink: 0;
+    position: relative;
+    width: 140px;
+    height: 140px;
+}
+
+.gauge-svg {
+    width: 140px;
+    height: 140px;
+    transform: rotate(-90deg);
+}
+
+.gauge-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 8;
+}
+
+.gauge-fill {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease;
+    filter: drop-shadow(0 0 6px currentColor);
+}
+
+.gauge-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gauge-value {
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.gauge-label {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+}
+
+/* Feature Bars */
+.feature-bars {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feature-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.feature-name {
+    width: 120px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.feature-bar-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.feature-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 2px;
+}
+
+.feature-bar-fill.blue {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.feature-bar-fill.purple {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+.feature-bar-fill.cyan {
+    background: linear-gradient(90deg, #06b6d4, #22d3ee);
+}
+
+.feature-bar-fill.emerald {
+    background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.feature-value {
+    width: 50px;
+    text-align: right;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Typing Dynamics Strip */
+.typing-dynamics {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    gap: 0;
+    justify-content: space-between;
+}
+
+.dynamic-stat {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.dynamic-stat:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.dynamic-stat-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+    transition: color 0.3s ease;
+}
+
+.dynamic-stat-value.warn {
+    color: var(--orange);
+}
+
+.dynamic-stat-value.alert {
+    color: var(--red);
+}
+
+.dynamic-stat-value.good {
+    color: var(--green);
+}
+
+.dynamic-stat-label {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+}
+
+.hesitation-flash {
+    animation: hesitationPulse 1.5s ease infinite;
+}
+
+@keyframes hesitationPulse {
+
+    0%,
+    100% {
+        color: var(--orange);
+    }
+
+    50% {
+        color: var(--red);
+    }
+}
+
+/* Empty state */
+.live-score-empty {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.live-score-empty span {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}

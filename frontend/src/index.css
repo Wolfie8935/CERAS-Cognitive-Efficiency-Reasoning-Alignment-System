@@ -1,0 +1,296 @@
+/* ========================================
+   CERAS Design System — Global Styles
+   ======================================== */
+
+:root {
+  /* Colors */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: #1e293b;
+  --bg-input: #0f172a;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-accent: #60a5fa;
+
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.2);
+
+  --green: #4ade80;
+  --red: #ef4444;
+  --orange: #f59e0b;
+  --blue: #60a5fa;
+  --purple: #a78bfa;
+
+  /* Gradients */
+  --gradient-purple: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
+  --gradient-emerald: linear-gradient(135deg, #065f46 0%, #064e3b 100%);
+  --gradient-rose: linear-gradient(135deg, #9f1239 0%, #4c0519 100%);
+  --gradient-blue: linear-gradient(135deg, #1e40af 0%, #172554 100%);
+
+  /* Spacing */
+  --sidebar-width: 320px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-default: 250ms ease;
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+  --shadow-glow-blue: 0 0 20px rgba(96, 165, 250, 0.15);
+  --shadow-glow-purple: 0 0 20px rgba(167, 139, 250, 0.15);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* ===== 3-TIER ELEVATION SYSTEM ===== */
+  /* Tier 1 — Primary Action (Run button, CE circle, Prompt Input) */
+  --t1-bg: rgba(30, 41, 59, 0.7);
+  --t1-border: rgba(96, 165, 250, 0.12);
+  --t1-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 24px rgba(96, 165, 250, 0.06);
+  --t1-glow: 0 0 40px rgba(96, 165, 250, 0.08);
+
+  /* Tier 2 — Analysis Panels (Live Prompt, Adaptive, Learning Steps) */
+  --t2-bg: rgba(30, 41, 59, 0.5);
+  --t2-border: rgba(255, 255, 255, 0.06);
+  --t2-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+  /* Tier 3 — Diagnostics / Collapsibles (Telemetry, Trace, etc.) */
+  --t3-bg: rgba(30, 41, 59, 0.35);
+  --t3-border: rgba(255, 255, 255, 0.04);
+  --t3-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Selection */
+::selection {
+  background: rgba(96, 165, 250, 0.3);
+  color: var(--text-primary);
+}
+
+/* Code blocks */
+pre,
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.88em;
+}
+
+pre {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  overflow-x: auto;
+  max-height: 400px;
+}
+
+code {
+  background: rgba(96, 165, 250, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--text-accent);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: var(--text-primary);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    max-height: 2000px;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s var(--transition-slow) both;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease both;
+}
+
+/* Utility */
+.glass {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-default);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+a {
+  color: var(--text-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Markdown rendered content */
+.markdown-content h1 {
+  font-size: 1.5em;
+  margin: 0.8em 0 0.4em;
+  font-weight: 700;
+}
+
+.markdown-content h2 {
+  font-size: 1.3em;
+  margin: 0.7em 0 0.3em;
+  font-weight: 600;
+}
+
+.markdown-content h3 {
+  font-size: 1.15em;
+  margin: 0.6em 0 0.3em;
+  font-weight: 600;
+}
+
+.markdown-content p {
+  margin: 0.5em 0;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.markdown-content li {
+  margin: 0.25em 0;
+}
+
+.markdown-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.markdown-content em {
+  color: var(--text-secondary);
+}
+
+.markdown-content blockquote {
+  border-left: 3px solid var(--blue);
+  padding-left: 1em;
+  margin: 0.8em 0;
+  color: var(--text-secondary);
+}

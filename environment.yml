@@ -57,3 +57,6 @@ dependencies:
       - keras
       - lightgbm
       - langchain-openai
+      - fastapi
+      - uvicorn
+      - python-multipart

@@ -1,0 +1,223 @@
+import { useEffect, useState } from 'react';
+import { checkConnection, checkHealth } from '../api';
+import { GEMINI_MODELS, GROQ_MODELS, OPENAI_MODELS } from '../data/examples';
+import './Sidebar.css';
+
+export default function Sidebar({ config, setConfig }) {
+    const [statuses, setStatuses] = useState({
+        groq: 'Waiting',
+        gemini: 'Waiting',
+        openai: 'Waiting',
+    });
+    const [modelsLoaded, setModelsLoaded] = useState(false);
+    const [modelsLoading, setModelsLoading] = useState(true);
+
+    // Poll model loading status
+    useEffect(() => {
+        let alive = true;
+        const poll = async () => {
+            try {
+                const data = await checkHealth();
+                if (!alive) return;
+                setModelsLoaded(data.models_loaded);
+                setModelsLoading(data.models_loading);
+                if (!data.models_loaded && !data.model_error) {
+                    setTimeout(poll, 2000);
+                }
+            } catch {
+                if (alive) setTimeout(poll, 3000);
+            }
+        };
+        poll();
+        return () => { alive = false; };
+    }, []);
+
+    // Auto-check connection when keys change
+    const handleKeyChange = async (provider, value) => {
+        const key = provider.toLowerCase();
+        setConfig(prev => ({ ...prev, [`${key}_api_key`]: value }));
+        if (value.length > 10) {
+            setStatuses(prev => ({ ...prev, [key]: 'Checking...' }));
+            try {
+                const result = await checkConnection(provider, value);
+                setStatuses(prev => ({ ...prev, [key]: result.connected ? 'Connected' : 'Not Connected' }));
+            } catch {
+                setStatuses(prev => ({ ...prev, [key]: 'Not Connected' }));
+            }
+        } else {
+            setStatuses(prev => ({ ...prev, [key]: 'Waiting' }));
+        }
+    };
+
+    const getModelsForProvider = (provider) => {
+        if (provider === 'Groq') return GROQ_MODELS;
+        if (provider === 'Gemini') return GEMINI_MODELS;
+        return OPENAI_MODELS;
+    };
+
+    const getStatusColor = (s) => {
+        if (s === 'Connected') return 'green';
+        if (s === 'Not Connected') return 'red';
+        if (s === 'Checking...') return 'blue pulse';
+        return 'grey';
+    };
+
+    return (
+        <aside className="sidebar">
+            {/* Brand */}
+            <div className="sidebar-brand">
+                <img src="/api/logo" alt="CERAS Logo" />
+                <h2>CERAS</h2>
+                <p>Cognitive Efficiency & Reasoning Alignment System</p>
+            </div>
+
+            <div className="sidebar-content">
+                {/* Model Loading Status */}
+                {modelsLoading && !modelsLoaded && (
+                    <div className="model-loading-banner">
+                        <div className="spinner-mini" />
+                        <span>Loading ML models...</span>
+                    </div>
+                )}
+                {modelsLoaded && (
+                    <div className="models-ready-banner">
+                        <span>✓</span>
+                        <span>Models ready</span>
+                    </div>
+                )}
+
+                {/* API Keys */}
+                <div className="sidebar-section">
+                    <div className="sidebar-section-title"><span>🔑</span> API Configuration</div>
+                    {['Groq', 'Gemini', 'OpenAI'].map(provider => (
+                        <div className="api-key-group" key={provider}>
+                            <label>{provider} API Key</label>
+                            <input
+                                className="api-key-input"
+                                type="password"
+                                placeholder={`Enter ${provider} key...`}
+                                value={config[`${provider.toLowerCase()}_api_key`] || ''}
+                                onChange={e => handleKeyChange(provider, e.target.value)}
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Main Model Selection */}
+                <div className="sidebar-section">
+                    <div className="sidebar-section-title"><span>🤖</span> Model Selection</div>
+                    <div className="model-select-group">
+                        <div className="group-label">Main Reasoner</div>
+                        <div className="model-row">
+                            <div className="provider-radio-group">
+                                {['Groq', 'Gemini', 'OpenAI'].map(p => (
+                                    <label className="provider-radio" key={p}>
+                                        <input
+                                            type="radio"
+                                            name="main_provider"
+                                            checked={config.main_provider === p}
+                                            onChange={() => {
+                                                const models = getModelsForProvider(p);
+                                                setConfig(prev => ({ ...prev, main_provider: p, main_model: models[0] }));
+                                            }}
+                                        />
+                                        {p}
+                                    </label>
+                                ))}
+                            </div>
+                            <div className="model-dropdown">
+                                <select
+                                    value={config.main_model}
+                                    onChange={e => setConfig(prev => ({ ...prev, main_model: e.target.value }))}
+                                >
+                                    {getModelsForProvider(config.main_provider).map(m => (
+                                        <option key={m} value={m}>{m}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="model-select-group">
+                        <div className="group-label">Verifier Model</div>
+                        <div className="model-row">
+                            <div className="provider-radio-group">
+                                {['Groq', 'Gemini', 'OpenAI'].map(p => (
+                                    <label className="provider-radio" key={p}>
+                                        <input
+                                            type="radio"
+                                            name="verifier_provider"
+                                            checked={config.verifier_provider === p}
+                                            onChange={() => {
+                                                const models = getModelsForProvider(p);
+                                                setConfig(prev => ({ ...prev, verifier_provider: p, verifier_model: models[1] || models[0] }));
+                                            }}
+                                        />
+                                        {p}
+                                    </label>
+                                ))}
+                            </div>
+                            <div className="model-dropdown">
+                                <select
+                                    value={config.verifier_model}
+                                    onChange={e => setConfig(prev => ({ ...prev, verifier_model: e.target.value }))}
+                                >
+                                    {getModelsForProvider(config.verifier_provider).map(m => (
+                                        <option key={m} value={m}>{m}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* System Status */}
+                <div className="sidebar-section">
+                    <div className="sidebar-section-title"><span>⚙️</span> System Status</div>
+                    <div className="status-box">
+                        {['Groq', 'Gemini', 'OpenAI'].map(p => {
+                            const key = p.toLowerCase();
+                            const status = statuses[key];
+                            return (
+                                <div className="status-row" key={p}>
+                                    <span className="status-label">{p} API</span>
+                                    <span className="status-indicator">
+                                        <span className={`status-dot ${getStatusColor(status)}`} />
+                                        {status}
+                                    </span>
+                                </div>
+                            );
+                        })}
+                        <div className="status-row">
+                            <span className="status-label">Telemetry</span>
+                            <span className="status-indicator">
+                                <span className="status-dot blue" />
+                                Tracking
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Architecture */}
+                <div className="sidebar-section">
+                    <div className="sidebar-section-title"><span>🏗️</span> Architecture</div>
+                    <div className="arch-box">
+                        {[
+                            { name: 'ToT-LLM', desc: 'Tree-of-Thoughts Reasoning Engine' },
+                            { name: 'CEPM', desc: 'Cognitive Engagement Modeling' },
+                            { name: 'CNN-Vis', desc: 'Behavioral Signal Analysis' },
+                            { name: 'Fusion Layer', desc: 'Multi-Modal Signal Integration' },
+                        ].map(a => (
+                            <div className="arch-item" key={a.name}>
+                                <strong>✦ {a.name}</strong>
+                                <span>{a.desc}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <div className="sidebar-footer">v2.0.0 • Neural Learning Stack</div>
+        </aside>
+    );
+}
