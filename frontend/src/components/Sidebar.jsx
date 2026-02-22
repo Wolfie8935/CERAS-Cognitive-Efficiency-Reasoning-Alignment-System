@@ -66,7 +66,7 @@ export default function Sidebar({ config, setConfig }) {
         <aside className="sidebar">
             {/* Brand */}
             <div className="sidebar-brand">
-                <img src="/api/logo" alt="CERAS Logo" />
+                <img src="../../assets/ceras_logo.png" alt="CERAS Logo" />
                 <h2>CERAS</h2>
                 <p>Cognitive Efficiency & Reasoning Alignment System</p>
             </div>

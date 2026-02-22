@@ -1,4 +1,4 @@
-const API_BASE = '/api';
+const API_BASE = 'https://ceras-kan8.onrender.com/api';
 
 export async function checkHealth() {
   const res = await fetch(`${API_BASE}/health`);
