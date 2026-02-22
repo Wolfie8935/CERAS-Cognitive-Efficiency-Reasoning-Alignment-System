@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { checkConnection, checkHealth } from '../api';
 import { GEMINI_MODELS, GROQ_MODELS, OPENAI_MODELS } from '../data/examples';
 import './Sidebar.css';
+import logo from '../../assets/ceras_logo.png';
 
 export default function Sidebar({ config, setConfig }) {
     const [statuses, setStatuses] = useState({
@@ -66,7 +67,7 @@ export default function Sidebar({ config, setConfig }) {
         <aside className="sidebar">
             {/* Brand */}
             <div className="sidebar-brand">
-                <img src="../../assets/ceras_logo.png" alt="CERAS Logo" />
+                <img src={logo} alt="CERAS Logo" />
                 <h2>CERAS</h2>
                 <p>Cognitive Efficiency & Reasoning Alignment System</p>
             </div>
