@@ -1,4 +1,4 @@
-const API_BASE = 'https://ceras-kan8.onrender.com/api';
+const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
 export async function checkHealth() {
   const res = await fetch(`${API_BASE}/health`);

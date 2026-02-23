@@ -1,12 +1,20 @@
 import './PromptInput.css';
 
-export default function PromptInput({ prompt, setPrompt, onRun, onNewProblem, loading, modelsLoaded, modelError, onKeyDown }) {
+export default function PromptInput({ prompt, setPrompt, onRun, onNewProblem, loading, modelsLoaded, modelError, onKeyDown, onPaste }) {
 
     const getButtonText = () => {
         if (loading) return '⏳ Running Reasoning Engine...';
         if (modelError) return '⚠ Model Loading Error';
         if (!modelsLoaded) return '⏳ Models Loading...';
         return '▶ Run Learning Session';
+    };
+
+    const handlePaste = (e) => {
+        const pastedText = e.clipboardData?.getData('text') || '';
+        if (pastedText && onPaste) {
+            // Let the paste happen first, then simulate analytics
+            setTimeout(() => onPaste(pastedText), 0);
+        }
     };
 
     return (
@@ -23,6 +31,7 @@ export default function PromptInput({ prompt, setPrompt, onRun, onNewProblem, lo
                 value={prompt}
                 onChange={e => setPrompt(e.target.value)}
                 onKeyDown={onKeyDown}
+                onPaste={handlePaste}
                 rows={6}
             />
             <button

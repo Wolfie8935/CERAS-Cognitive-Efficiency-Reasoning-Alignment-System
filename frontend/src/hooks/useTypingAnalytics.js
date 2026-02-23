@@ -116,6 +116,47 @@ export default function useTypingAnalytics() {
     });
   }, []);
 
+  // Simulate realistic analytics for pasted / pre-filled text at 50 WPM avg
+  const simulateFromPaste = useCallback((text) => {
+    const words = text.trim().split(/\s+/).filter(Boolean);
+    const wordCount = words.length;
+    const charCount = text.length;
+    const AVG_WPM = 50;
+    const AVG_INTERVAL = Math.round(60000 / (AVG_WPM * 5)); // ~240ms
+    const sessionSec = wordCount > 0 ? Math.round((wordCount / AVG_WPM) * 60) : 0;
+
+    const s = stateRef.current;
+    if (s.pauseTimerId) clearTimeout(s.pauseTimerId);
+
+    // Update internal state so subsequent typed keys build on top
+    const now = Date.now();
+    stateRef.current = {
+      totalKeys: charCount,
+      delKeys: 0,
+      wordCount,
+      timestamps: [now - AVG_INTERVAL, now], // minimal pair for future WPM calc
+      lastKeystrokeTime: now,
+      sessionStart: now - sessionSec * 1000,
+      hesitationCount: 0,
+      longestPause: 500,
+      pauseTimerId: null,
+      isHesitating: false,
+    };
+
+    setAnalytics({
+      totalKeystrokes: charCount,
+      deletions: 0,
+      deletionRatio: 0,
+      wpm: AVG_WPM,
+      hesitations: 0,
+      longestPause: 500,
+      currentPause: 0,
+      isHesitating: false,
+      sessionDuration: sessionSec,
+      avgKeystrokeInterval: AVG_INTERVAL,
+    });
+  }, []);
+
   // Reset all analytics (for "New Problem")
   const reset = useCallback(() => {
     const s = stateRef.current;
@@ -146,5 +187,5 @@ export default function useTypingAnalytics() {
     });
   }, []);
 
-  return { analytics, onKeyDown, reset };
+  return { analytics, onKeyDown, simulateFromPaste, reset };
 }

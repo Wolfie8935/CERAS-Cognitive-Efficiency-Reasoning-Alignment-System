@@ -33,7 +33,7 @@ export default function App() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const startTimeRef = useRef(Date.now());
 
-    const { analytics, onKeyDown, reset: resetAnalytics } = useTypingAnalytics();
+    const { analytics, onKeyDown, simulateFromPaste, reset: resetAnalytics } = useTypingAnalytics();
 
     // Poll model health
     useEffect(() => {
@@ -115,6 +115,7 @@ export default function App() {
         setPrompt(text);
         setResult(null);
         setHasResult(false);
+        simulateFromPaste(text);
     };
 
     return (
@@ -157,6 +158,7 @@ export default function App() {
                     modelsLoaded={modelsLoaded}
                     modelError={modelError}
                     onKeyDown={onKeyDown}
+                    onPaste={simulateFromPaste}
                 />
 
                 {/* Live Prompt Score — appears below textarea */}
