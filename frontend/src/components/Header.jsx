@@ -1,16 +1,33 @@
+import { useAuth } from '../context/AuthContext';
 import './Header.css';
 
-export default function Header() {
+export default function Header({ user, onOpenHistory, onOpenVault }) {
+    const { signOut } = useAuth();
+
     return (
-        <header className="header fade-in-up">
-            <h1 className="header-title">CERAS</h1>
-            <p className="header-subtitle">Cognitive Efficiency Reasoning Alignment System</p>
-            <div className="header-description">
-                <b>CERAS</b> is an advanced adaptive learning environment designed to optimize how you learn and solve complex problems.
-                By fusing <b>Large Language Model (LLM)</b> reasoning capabilities with real-time <b>Cognitive Efficiency</b> metrics,
-                current behavioral diagnostics, and neuro-fuzzy alignment, CERAS provides a personalized learning experience.
-                It analyzes your input complexity, structure, and intent to guide you through deep concepts with tailored roadmaps,
-                ensuring you don't just get answers, but truly master the material.
+        <header className="header">
+            <div className="header-left">
+                <h1 className="header-title">CERAS Dashboard</h1>
+            </div>
+            <div className="header-right">
+                {user && (
+                    <>
+                        <button className="header-icon-btn" onClick={onOpenHistory} title="Chat History">
+                            📜
+                        </button>
+                        <button className="header-icon-btn" onClick={onOpenVault} title="API Key Vault">
+                            🔒
+                        </button>
+                        <div className="header-user">
+                            <div className="header-avatar">
+                                {(user.user_metadata?.display_name || user.email || '?')[0].toUpperCase()}
+                            </div>
+                            <button className="header-logout" onClick={signOut} title="Sign Out">
+                                Sign Out
+                            </button>
+                        </div>
+                    </>
+                )}
             </div>
         </header>
     );

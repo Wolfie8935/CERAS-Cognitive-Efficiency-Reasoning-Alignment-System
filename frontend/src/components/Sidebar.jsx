@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import logo from '../../assets/ceras_logo.png';
 import { checkConnection, checkHealth } from '../api';
+import { useAuth } from '../context/AuthContext';
 import { GEMINI_MODELS, GROQ_MODELS, OPENAI_MODELS } from '../data/examples';
 import './Sidebar.css';
 
-export default function Sidebar({ config, setConfig, isOpen, onClose }) {
+export default function Sidebar({ config, setConfig, isOpen, onClose, user, onOpenHistory, onOpenVault }) {
+    const { signOut } = useAuth();
     const [statuses, setStatuses] = useState({
         groq: 'Waiting',
         gemini: 'Waiting',
@@ -70,6 +72,14 @@ export default function Sidebar({ config, setConfig, isOpen, onClose }) {
         return 'grey';
     };
 
+    const handleSignOut = async () => {
+        try {
+            await signOut();
+        } catch (err) {
+            console.error('Sign out error:', err);
+        }
+    };
+
     return (
         <aside className={`sidebar ${isOpen ? 'sidebar--open' : ''}`}>
             {/* Brand */}
@@ -81,6 +91,32 @@ export default function Sidebar({ config, setConfig, isOpen, onClose }) {
             </div>
 
             <div className="sidebar-content">
+                {/* User Card */}
+                {user && (
+                    <div className="sidebar-user-card">
+                        <div className="user-avatar">
+                            {(user.user_metadata?.display_name || user.email || '?')[0].toUpperCase()}
+                        </div>
+                        <div className="user-info">
+                            <span className="user-name">{user.user_metadata?.display_name || 'User'}</span>
+                            <span className="user-email">{user.email}</span>
+                        </div>
+                        <button className="user-logout-btn" onClick={handleSignOut} title="Sign Out">
+                            ⏻
+                        </button>
+                    </div>
+                )}
+
+                {/* Navigation */}
+                <div className="sidebar-nav">
+                    <button className="sidebar-nav-btn" onClick={onOpenHistory}>
+                        <span>📜</span> Chat History
+                    </button>
+                    <button className="sidebar-nav-btn" onClick={onOpenVault}>
+                        <span>🔒</span> API Key Vault
+                    </button>
+                </div>
+
                 {/* Model Loading Status */}
                 {modelsLoading && !modelsLoaded && (
                     <div className="model-loading-banner">

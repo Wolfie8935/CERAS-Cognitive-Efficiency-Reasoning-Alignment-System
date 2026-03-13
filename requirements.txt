@@ -24,6 +24,8 @@ requests
 sqlalchemy
 sqlmodel
 python-dotenv
+supabase
+python-jose[cryptography]
 
 # Utilities
 pyyaml

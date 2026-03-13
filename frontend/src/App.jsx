@@ -5,15 +5,23 @@ import Dashboard from './components/Dashboard';
 import ExampleCards from './components/ExampleCards';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import HistoryPanel from './components/HistoryPanel';
 import LivePromptScore from './components/LivePromptScore';
 import LoadingOverlay from './components/LoadingOverlay';
 import PromptGuide from './components/PromptGuide';
 import PromptInput from './components/PromptInput';
 import Sidebar from './components/Sidebar';
+import VaultPage from './components/VaultPage';
+import { useAuth } from './context/AuthContext';
 import { GROQ_MODELS } from './data/examples';
 import useTypingAnalytics from './hooks/useTypingAnalytics';
+import useVault from './hooks/useVault';
+import { saveSession } from './lib/saveSession';
+import LoginPage from './pages/LoginPage';
 
 export default function App() {
+    const { user, loading: authLoading } = useAuth();
+
     const [config, setConfig] = useState({
         main_provider: 'Groq',
         verifier_provider: 'Groq',
@@ -31,9 +39,23 @@ export default function App() {
     const [modelsLoaded, setModelsLoaded] = useState(false);
     const [modelError, setModelError] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [activePanel, setActivePanel] = useState(null); // 'history' | 'vault' | null
     const startTimeRef = useRef(Date.now());
 
     const { analytics, onKeyDown, simulateFromPaste, reset: resetAnalytics } = useTypingAnalytics();
+    const vault = useVault(user?.id);
+
+    // Load saved API keys from vault on login
+    useEffect(() => {
+        if (user && vault.keys.length > 0) {
+            setConfig(prev => ({
+                ...prev,
+                groq_api_key: vault.getKeyForProvider('Groq') || prev.groq_api_key,
+                gemini_api_key: vault.getKeyForProvider('Gemini') || prev.gemini_api_key,
+                openai_api_key: vault.getKeyForProvider('OpenAI') || prev.openai_api_key,
+            }));
+        }
+    }, [user, vault.keys]);
 
     // Poll model health
     useEffect(() => {
@@ -45,7 +67,6 @@ export default function App() {
                 setModelsLoaded(data.models_loaded);
                 setModelError(data.model_error || null);
                 if (!data.models_loaded) {
-                    // Keep polling even on error — models might be reloaded
                     setTimeout(poll, data.model_error ? 5000 : 2000);
                 }
             } catch {
@@ -80,6 +101,17 @@ export default function App() {
                 formulation_time: formulationTime,
             });
             setResult(data);
+
+            // Save session to Supabase
+            if (user) {
+                saveSession({
+                    userId: user.id,
+                    prompt: prompt.trim(),
+                    result: data,
+                    config,
+                    typingAnalytics: analytics,
+                }).catch(err => console.error('Session save failed:', err));
+            }
         } catch (err) {
             setResult({
                 final_steps: [`Error: ${err.message}`],
@@ -118,6 +150,30 @@ export default function App() {
         simulateFromPaste(text);
     };
 
+    const handleSelectSession = ({ prompt: p, result: r, config: c }) => {
+        setPrompt(p);
+        setResult(r);
+        setHasResult(true);
+        if (c) {
+            setConfig(prev => ({ ...prev, ...c }));
+        }
+    };
+
+    // Show loading spinner while auth state initializes
+    if (authLoading) {
+        return (
+            <div className="app-auth-loading">
+                <div className="auth-spinner" />
+                <p>Loading...</p>
+            </div>
+        );
+    }
+
+    // Show login page if not authenticated
+    if (!user) {
+        return <LoginPage />;
+    }
+
     return (
         <div className="app-layout">
             {/* Mobile hamburger toggle */}
@@ -142,10 +198,17 @@ export default function App() {
                 setConfig={setConfig}
                 isOpen={sidebarOpen}
                 onClose={() => setSidebarOpen(false)}
+                user={user}
+                onOpenHistory={() => setActivePanel('history')}
+                onOpenVault={() => setActivePanel('vault')}
             />
 
             <main className="main-content">
-                <Header />
+                <Header
+                    user={user}
+                    onOpenHistory={() => setActivePanel('history')}
+                    onOpenVault={() => setActivePanel('vault')}
+                />
                 <PromptGuide />
                 <ExampleCards onSelect={handleSelectExample} />
 
@@ -177,6 +240,32 @@ export default function App() {
             </main>
 
             {loading && <LoadingOverlay />}
+
+            {/* Slide-over panels */}
+            {activePanel === 'history' && (
+                <div className="slide-panel-overlay" onClick={() => setActivePanel(null)}>
+                    <div className="slide-panel" onClick={(e) => e.stopPropagation()}>
+                        <HistoryPanel
+                            userId={user.id}
+                            onSelectSession={handleSelectSession}
+                            onClose={() => setActivePanel(null)}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {activePanel === 'vault' && (
+                <div className="slide-panel-overlay" onClick={() => setActivePanel(null)}>
+                    <div className="slide-panel" onClick={(e) => e.stopPropagation()}>
+                        <VaultPage
+                            vault={vault}
+                            config={config}
+                            setConfig={setConfig}
+                            onClose={() => setActivePanel(null)}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

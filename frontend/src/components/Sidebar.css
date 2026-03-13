@@ -53,6 +53,108 @@
     flex: 1;
 }
 
+/* User Card */
+.sidebar-user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    background: rgba(99, 179, 237, 0.06);
+    border: 1px solid rgba(99, 179, 237, 0.1);
+    border-radius: var(--radius-md, 10px);
+}
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #63b3ed, #9f7aea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.user-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary, #e2e8f0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-email {
+    font-size: 0.68rem;
+    color: var(--text-muted, #718096);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-logout-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    color: var(--text-muted, #718096);
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.user-logout-btn:hover {
+    color: #fc8181;
+    border-color: rgba(245, 101, 101, 0.3);
+    background: rgba(245, 101, 101, 0.08);
+}
+
+/* Navigation */
+.sidebar-nav {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.sidebar-nav-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary, #a0aec0);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-sm, 8px);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sidebar-nav-btn:hover {
+    background: rgba(99, 179, 237, 0.08);
+    border-color: rgba(99, 179, 237, 0.15);
+    color: var(--text-primary, #e2e8f0);
+}
+
+.sidebar-nav-btn span {
+    font-size: 0.9rem;
+}
+
 .sidebar-section {
     margin-bottom: 24px;
 }

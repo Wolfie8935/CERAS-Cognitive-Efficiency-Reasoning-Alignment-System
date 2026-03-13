@@ -69,3 +69,73 @@
         backdrop-filter: blur(2px);
     }
 }
+
+/* Auth loading spinner */
+.app-auth-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #0a0a1a;
+    color: #718096;
+    gap: 1rem;
+}
+
+.auth-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(99, 179, 237, 0.15);
+    border-top-color: #63b3ed;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Slide-over panel overlay */
+.slide-panel-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 200;
+    display: flex;
+    justify-content: flex-end;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.slide-panel {
+    width: 420px;
+    max-width: 90vw;
+    height: 100vh;
+    overflow-y: auto;
+    background: rgba(13, 17, 23, 0.98);
+    border-left: 1px solid rgba(99, 179, 237, 0.1);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.4);
+    animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}

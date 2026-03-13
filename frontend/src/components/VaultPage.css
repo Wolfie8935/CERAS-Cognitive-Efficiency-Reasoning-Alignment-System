@@ -1,0 +1,257 @@
+.vault-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: rgba(13, 17, 23, 0.98);
+    color: #e2e8f0;
+}
+
+.vault-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid rgba(99, 179, 237, 0.1);
+}
+
+.vault-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.vault-close {
+    background: none;
+    border: none;
+    color: #718096;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.vault-close:hover {
+    color: #fc8181;
+}
+
+/* Add Section */
+.vault-add-section {
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.vault-add-section h4 {
+    margin: 0 0 0.6rem;
+    font-size: 0.82rem;
+    color: #a0aec0;
+    font-weight: 600;
+}
+
+.vault-add-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.vault-add-form select,
+.vault-add-form input {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.82rem;
+    border: 1px solid rgba(99, 179, 237, 0.12);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.vault-add-form select:focus,
+.vault-add-form input:focus {
+    border-color: rgba(99, 179, 237, 0.35);
+}
+
+.vault-add-form select option {
+    background: #161b22;
+    color: #e2e8f0;
+}
+
+.vault-label-input {
+    font-size: 0.78rem !important;
+}
+
+.vault-save-btn {
+    padding: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #63b3ed, #9f7aea);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.vault-save-btn:hover:not(:disabled) {
+    box-shadow: 0 4px 16px rgba(99, 179, 237, 0.25);
+}
+
+.vault-save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.vault-error {
+    margin-top: 0.4rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.78rem;
+    color: #fc8181;
+    background: rgba(245, 101, 101, 0.1);
+    border-radius: 6px;
+}
+
+.vault-success {
+    margin-top: 0.4rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.78rem;
+    color: #68d391;
+    background: rgba(72, 187, 120, 0.1);
+    border-radius: 6px;
+}
+
+/* Keys Section */
+.vault-keys-section {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.2rem;
+}
+
+.vault-keys-section h4 {
+    margin: 0 0 0.8rem;
+    font-size: 0.82rem;
+    color: #a0aec0;
+    font-weight: 600;
+}
+
+.vault-loading,
+.vault-empty {
+    font-size: 0.82rem;
+    color: #718096;
+    text-align: center;
+    padding: 1rem;
+}
+
+.vault-key-card {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 0.8rem;
+    margin-bottom: 0.6rem;
+    background: rgba(255, 255, 255, 0.02);
+    transition: border-color 0.2s;
+}
+
+.vault-key-card:hover {
+    border-color: rgba(99, 179, 237, 0.15);
+}
+
+.vault-key-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.vault-key-provider {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #63b3ed;
+}
+
+.vault-key-label {
+    font-size: 0.72rem;
+    color: #718096;
+    padding: 0.1rem 0.4rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.vault-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    margin-left: auto;
+}
+
+.vault-badge.green {
+    color: #68d391;
+    background: rgba(72, 187, 120, 0.15);
+}
+
+.vault-badge.red {
+    color: #fc8181;
+    background: rgba(245, 101, 101, 0.15);
+}
+
+.vault-badge.grey {
+    color: #718096;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.vault-key-value {
+    font-size: 0.75rem;
+    color: #718096;
+    font-family: monospace;
+    margin-bottom: 0.3rem;
+}
+
+.vault-key-verified {
+    font-size: 0.68rem;
+    color: #4a5568;
+    margin-bottom: 0.4rem;
+}
+
+.vault-key-actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.vault-action-btn {
+    padding: 0.3rem 0.55rem;
+    font-size: 0.72rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.vault-action-btn.use {
+    background: rgba(99, 179, 237, 0.12);
+    color: #63b3ed;
+}
+
+.vault-action-btn.use:hover {
+    background: rgba(99, 179, 237, 0.22);
+}
+
+.vault-action-btn.test {
+    background: rgba(159, 122, 234, 0.12);
+    color: #b794f4;
+}
+
+.vault-action-btn.test:hover {
+    background: rgba(159, 122, 234, 0.22);
+}
+
+.vault-action-btn.delete {
+    background: rgba(245, 101, 101, 0.1);
+    color: #fc8181;
+}
+
+.vault-action-btn.delete:hover {
+    background: rgba(245, 101, 101, 0.2);
+}
+
+.vault-action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
