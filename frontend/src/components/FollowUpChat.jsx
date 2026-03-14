@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { sendFollowUp } from '../api';
+import { supabase } from '../lib/supabase';
 import './FollowUpChat.css';
 
-export default function FollowUpChat({ result, prompt, config, onCostUpdate }) {
+export default function FollowUpChat({ result, prompt, config, onCostUpdate, sessionId, messageId, userId }) {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [sending, setSending] = useState(false);
@@ -52,6 +53,34 @@ export default function FollowUpChat({ result, prompt, config, onCostUpdate }) {
             setTotalTokens(newTotalTokens);
             setTotalCost(newTotalCost);
             if (onCostUpdate) onCostUpdate({ tokens: newTotalTokens, cost: newTotalCost });
+
+            // Persist follow-up messages to Supabase
+            if (messageId && userId) {
+                try {
+                    await supabase.from('followup_messages').insert([
+                        {
+                            message_id: messageId,
+                            user_id: userId,
+                            role: 'user',
+                            content: text,
+                            prompt_tokens: 0,
+                            completion_tokens: 0,
+                            cost_usd: null,
+                        },
+                        {
+                            message_id: messageId,
+                            user_id: userId,
+                            role: 'assistant',
+                            content: data.response,
+                            prompt_tokens: data.prompt_tokens ?? 0,
+                            completion_tokens: data.completion_tokens ?? 0,
+                            cost_usd: data.cost_usd ?? null,
+                        },
+                    ]);
+                } catch (err) {
+                    console.error('Failed to save follow-up to Supabase:', err);
+                }
+            }
         } catch (err) {
             setMessages(prev => [...prev, {
                 role: 'assistant',

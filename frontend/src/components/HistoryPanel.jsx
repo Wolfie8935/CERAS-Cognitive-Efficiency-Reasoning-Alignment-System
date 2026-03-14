@@ -26,6 +26,8 @@ export default function HistoryPanel({ userId, onSelectSession, onClose }) {
         const msg = session.chat_messages[0];
         const metrics = msg.session_metrics?.[0] || {};
         onSelectSession({
+            sessionId: session.id,
+            messageId: msg.id,
             prompt: msg.prompt,
             result: {
                 final_steps: msg.final_steps || [],

@@ -1,5 +1,17 @@
 import { supabase } from '../lib/supabase';
 
+// USD per 1M tokens (input, output) — match server.py
+const COST_RATES = {
+  Groq: [0.59, 0.79],
+  Gemini: [0.075, 0.3],
+  OpenAI: [0.15, 0.6],
+};
+
+function estimateCost(promptTokens, completionTokens, provider) {
+  const [inRate, outRate] = COST_RATES[provider] || [0.59, 0.79];
+  return Math.round((promptTokens * inRate + completionTokens * outRate) / 1_000_000 * 1e8) / 1e8;
+}
+
 /**
  * Save a complete session (chat + metrics + typing analytics) to Supabase.
  * Called after receiving results from the backend.
@@ -40,8 +52,13 @@ export async function saveSession({ userId, prompt, result, config, typingAnalyt
 
     if (msgErr) throw msgErr;
 
-    // 3. Save session metrics
+    // 3. Save session metrics (include cost_usd)
     const features = result.features || {};
+    const totalTokens = result.total_tokens || 0;
+    const estPrompt = Math.round(totalTokens * 0.3);
+    const estCompletion = Math.round(totalTokens * 0.7);
+    const costUsd = totalTokens > 0 ? estimateCost(estPrompt, estCompletion, config.main_provider) : null;
+
     const { error: metricsErr } = await supabase
       .from('session_metrics')
       .insert({
@@ -55,8 +72,9 @@ export async function saveSession({ userId, prompt, result, config, typingAnalyt
         formulation_time: result.formulation_time,
         runtime: result.runtime,
         total_tokens: result.total_tokens,
-        est_prompt_tokens: Math.round((result.total_tokens || 0) * 0.3),
-        est_response_tokens: Math.round((result.total_tokens || 0) * 0.7),
+        est_prompt_tokens: estPrompt,
+        est_response_tokens: estCompletion,
+        cost_usd: costUsd,
         prompt_length: features.prompt_length,
         character_count: features.character_count,
         sentence_count: features.sentence_count,

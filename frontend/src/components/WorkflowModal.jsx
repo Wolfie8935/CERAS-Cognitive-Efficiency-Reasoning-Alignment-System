@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { generatePlan } from '../api';
+import { supabase } from '../lib/supabase';
 import './WorkflowModal.css';
 
-export default function WorkflowModal({ result, prompt, config, onClose, onCostUpdate }) {
+export default function WorkflowModal({ result, prompt, config, onClose, onCostUpdate, sessionId, messageId, userId }) {
     const [plan, setPlan] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -26,6 +27,20 @@ export default function WorkflowModal({ result, prompt, config, onClose, onCostU
             setPlan(data.plan);
             if (onCostUpdate) {
                 onCostUpdate({ tokens: data.total_tokens, cost: data.cost_usd });
+            }
+            if (messageId && userId) {
+                try {
+                    await supabase.from('learning_plans').insert({
+                        message_id: messageId,
+                        user_id: userId,
+                        plan_text: data.plan,
+                        prompt_tokens: data.prompt_tokens ?? 0,
+                        completion_tokens: data.completion_tokens ?? 0,
+                        cost_usd: data.cost_usd ?? null,
+                    });
+                } catch (err) {
+                    console.error('Failed to save plan to Supabase:', err);
+                }
             }
         } catch (err) {
             setError(err.message);

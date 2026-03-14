@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { getAdaptiveResponse } from '../api';
+import { supabase } from '../lib/supabase';
 import FollowUpChat from './FollowUpChat';
 import WorkflowModal from './WorkflowModal';
 import './Dashboard.css';
@@ -49,7 +50,7 @@ const getPercentile = (score) => {
     return 'Below median';
 };
 
-export default function Dashboard({ result, prompt, config, hasResult, typingAnalytics }) {
+export default function Dashboard({ result, prompt, config, hasResult, typingAnalytics, sessionId, messageId, userId }) {
     const [adaptiveRes, setAdaptiveRes] = useState(null);
     const [adaptiveLoading, setAdaptiveLoading] = useState(false);
     const [showWorkflow, setShowWorkflow] = useState(false);
@@ -119,7 +120,7 @@ export default function Dashboard({ result, prompt, config, hasResult, typingAna
     const delta = result.fused_score - baseline;
     const deltaSign = delta >= 0 ? '+' : '';
 
-    const downloadReport = () => {
+    const downloadReport = async () => {
         const lines = [
             `CERAS Session Report`,
             `${'='.repeat(40)}`,
@@ -158,7 +159,20 @@ export default function Dashboard({ result, prompt, config, hasResult, typingAna
             ``,
             adaptiveRes ? `Adaptive Response:\n${adaptiveRes}` : '',
         ];
-        const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+        const reportContent = lines.join('\n');
+        if (sessionId && messageId && userId) {
+            try {
+                await supabase.from('session_reports').insert({
+                    session_id: sessionId,
+                    message_id: messageId,
+                    user_id: userId,
+                    report_content: reportContent,
+                });
+            } catch (err) {
+                console.error('Failed to save report to Supabase:', err);
+            }
+        }
+        const blob = new Blob([reportContent], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -380,6 +394,9 @@ export default function Dashboard({ result, prompt, config, hasResult, typingAna
                 prompt={prompt}
                 config={config}
                 onCostUpdate={setFollowupCost}
+                sessionId={sessionId}
+                messageId={messageId}
+                userId={userId}
             />
 
             {/* ===== ACTIONS ===== */}
@@ -410,6 +427,9 @@ export default function Dashboard({ result, prompt, config, hasResult, typingAna
                     config={config}
                     onClose={() => setShowWorkflow(false)}
                     onCostUpdate={setPlanCost}
+                    sessionId={sessionId}
+                    messageId={messageId}
+                    userId={userId}
                 />
             )}
         </div>

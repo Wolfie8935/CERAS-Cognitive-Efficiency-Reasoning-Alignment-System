@@ -40,6 +40,8 @@ export default function App() {
     const [modelError, setModelError] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [activePanel, setActivePanel] = useState(null); // 'history' | 'vault' | null
+    const [currentSessionId, setCurrentSessionId] = useState(null);
+    const [currentMessageId, setCurrentMessageId] = useState(null);
     const startTimeRef = useRef(Date.now());
 
     const { analytics, onKeyDown, simulateFromPaste, reset: resetAnalytics } = useTypingAnalytics();
@@ -102,15 +104,23 @@ export default function App() {
             });
             setResult(data);
 
-            // Save session to Supabase
+            // Save session to Supabase and capture ids for follow-up/report/plan
             if (user) {
-                saveSession({
-                    userId: user.id,
-                    prompt: prompt.trim(),
-                    result: data,
-                    config,
-                    typingAnalytics: analytics,
-                }).catch(err => console.error('Session save failed:', err));
+                try {
+                    const saved = await saveSession({
+                        userId: user.id,
+                        prompt: prompt.trim(),
+                        result: data,
+                        config,
+                        typingAnalytics: analytics,
+                    });
+                    if (saved?.session?.id && saved?.message?.id) {
+                        setCurrentSessionId(saved.session.id);
+                        setCurrentMessageId(saved.message.id);
+                    }
+                } catch (err) {
+                    console.error('Session save failed:', err);
+                }
             }
         } catch (err) {
             setResult({
@@ -139,6 +149,8 @@ export default function App() {
         setPrompt('');
         setResult(null);
         setHasResult(false);
+        setCurrentSessionId(null);
+        setCurrentMessageId(null);
         resetAnalytics();
         startTimeRef.current = Date.now();
     };
@@ -150,10 +162,12 @@ export default function App() {
         simulateFromPaste(text);
     };
 
-    const handleSelectSession = ({ prompt: p, result: r, config: c }) => {
+    const handleSelectSession = ({ prompt: p, result: r, config: c, sessionId, messageId }) => {
         setPrompt(p);
         setResult(r);
         setHasResult(true);
+        setCurrentSessionId(sessionId ?? null);
+        setCurrentMessageId(messageId ?? null);
         if (c) {
             setConfig(prev => ({ ...prev, ...c }));
         }
@@ -238,6 +252,9 @@ export default function App() {
                     config={config}
                     hasResult={hasResult}
                     typingAnalytics={analytics}
+                    sessionId={currentSessionId}
+                    messageId={currentMessageId}
+                    userId={user?.id}
                 />
 
                 <Footer />
